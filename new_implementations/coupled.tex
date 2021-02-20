@@ -1,0 +1,142 @@
+\section{Coupling QD-Benzene}
+\begin{itemize}
+    \item decided that investigate pulse only hitting quantum dot
+    \item U matrices for couples systems
+    \item equal and opposite spin matrices
+    \item full coupling vs half coupling
+    \item {\color{red} why would we expect to see impact ionisation in such a coupled system? previous papers?}
+    \item separate $v_ii$ values for QD and Benzene
+\end{itemize}
+
+\usetikzlibrary{matrix, positioning}
+
+\colorlet{mgreen}{green!80!black!30}
+\colorlet{myellow}{yellow!90!red!70}
+\newcommand{\my}{|[fill=myellow]|}
+\renewcommand{\mg}{|[fill=mgreen]|}
+
+
+
+\begin{figure}[!hbt]
+    \centering
+    \begin{tikzpicture}[cell/.style={rectangle,draw=black},
+                    space/.style={minimum height=1.5em,matrix of nodes,row sep=-\pgflinewidth,column sep=-\pgflinewidth},
+                    text depth=0.5ex,text height=2ex,nodes in empty cells,
+                    headers/.style={font=\footnotesize, color=blue!60!black!30},
+                    QD/.style={draw,thick,circle, radius = .1em, fill=green!80!yellow, inner sep=0},
+                    Benzene/.style={draw,thick, circle, radius = .1em, fill=red!80!yellow, inner sep=0},
+                    nlabelcolor/.style={gray},
+                    QDlabel/.style={label={above left:{\color{gray}#1}}}
+                    ]
+    
+    %maybe use brace to indicate Benzene and QD regions https://texample.net/tikz/examples/model-physics/
+    \matrix (first) [space,nodes={cell,minimum width=2em, minimum height=2em}]
+    {
+    \my         & 1             & 1         & $\sqrt{2}$& \mg 0     & 0         & 0         & 0         & 0         & 0        \\
+    1           & \my           & $\sqrt{2}$& 1         & \mg 0     & 0         & 0         & 0         & 0         & 0        \\
+    1           & $\sqrt{2}$    & \my       & 1         & \mg 0     & 0         & 0         & 0         & 0         & 0        \\
+    $\sqrt{2}$  & 1             & 1         & \my       & \mg 0     & 0         & 0         & 0         & 0         & 0        \\
+    \mg 0       & \mg 0         & \mg 0     & \mg 0     & \my       & 1         & $\sqrt{3}$& 2         & $\sqrt{3}$& 1        \\
+    0           & 0             & 0         & 0         & 1         &  \my      & 1         & $\sqrt{3}$& 2         & $\sqrt{3}$ \\
+    0           & 0             & 0         & 0         & $\sqrt{3}$& 1         & \my       & 1         & $\sqrt{3}$& 2        \\
+    0           & 0             & 0         & 0         & 2         & $\sqrt{3}$& 1         &  \my      & 1         & $\sqrt{3}$ \\
+    0           & 0             & 0         & 0         & $\sqrt{3}$& 2         & $\sqrt{3}$& 1         & \my       & 1        \\
+    0           & 0             & 0         & 0         & 1         & $\sqrt{3}$& 2         & $\sqrt{3}$& 1         &  \my \\ };
+    
+    \foreach \i/\x in {0/1, 1/2,2/3,3/4,4/5,5/6, 6/7, 7/8, 8/9, 9/10}{
+    \node[headers, anchor=north] at ([yshift=4ex]first-1-\x.north) {\i};
+    \node[headers, anchor=west] at ([xshift=-4ex]first-\x-1.west) {\i};
+    }
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \tikzset{shift={(6,1)}}
+    \newdimen \qdd
+    \qdd = 2cm
+    %QD nodes    
+    \node[QD, QDlabel={2}] at (0,0)          (QD2){};
+    \node[QD, QDlabel={3}] at (\qdd,0)       (QD3){};
+    \node[QD, QDlabel={0}] at (0,\qdd)       (QD0){};
+    \node[QD, QDlabel={1}] at (\qdd,\qdd)    (QD1){};
+    
+    \draw[thick] (QD2.east) -- (QD3.west);
+    \draw[thick] (QD0.east) -- (QD1.west);
+    \draw[thick] (QD0.south) -- (QD2.north);
+    \draw[thick] (QD1.south) -- (QD3.north);
+    
+    
+    %Benzene Nodes
+    \newdimen\R
+    \R=1.5cm
+    \tikzset{shift={(5,1)}}
+    \draw[thick] (0:\R)
+    \foreach \x in {60,120,...,360} {  -- (\x:\R) }
+    -- cycle (360:\R) node[Benzene, label={[nlabelcolor]7}] (B7){}
+    -- cycle (300:\R) node[Benzene, label={[nlabelcolor]8}] (B8){}
+    -- cycle (240:\R) node[Benzene, label={[nlabelcolor]9}] (B9){}
+    -- cycle (180:\R) node[Benzene, label={[nlabelcolor]4}] (B4){}
+    -- cycle (120:\R) node[Benzene, label={[nlabelcolor]5}] (B5){}
+    -- cycle  (60:\R) node[Benzene, label={[nlabelcolor]6}] (B6){};
+    
+    
+    \tikzset{shift={(0,0)}}
+    \foreach \x in {3, 1} \draw[color=red, thick] (QD\x.east) to [out=0, in=180] (B4.west);
+    \draw[color=red, thick] (QD2.south) to [out = 270, in=180] (B4.west);
+    \draw[color=red, thick] (QD0.north) to [out = 90, in=180] (B4.west);
+    
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % LEGEND
+    
+    \node [draw, rectangle, fill=myellow, minimum size=1em, inner sep=0, label={[align=left, text width=170pt]right: $\begin{cases} 0 &\text{ for equal spin matrix} \\ 1 &\text{ for opposite spin matrix}\end{cases}$}] at ($(QD2) + (0, -1.6)$) {};
+    
+    \node [draw, rectangle, fill=mgreen, minimum size=1em, inner sep=0, label={[align=left, text width=170pt]right: We assume strong shielding between benzene and quantum dot $\Rightarrow$ no Coulomb interaction}] at ($(QD2) + (0, -3.)$) {0};
+    
+    
+    \end{tikzpicture}
+    \caption{Table shows distances between sites, as multiples of the C-C bond length ($d=\SI{1.40}{\angstrom}$) {\color{red} idk maybe add functions on how to generate table... prbly not nescessary though}}
+\end{figure}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\viiQD}   {|[fill=green!59]| $v_{ii}^{\text{qd}}$}
+\newcommand{\viiBZ}   {|[fill=green!40]| $v_{ii}^{\text{b}}$}
+\newcommand{\vh}    {|[fill=red!30]| $v_h$}
+\newcommand{\vv}    {|[fill=yellow!80!red!50]| $v_v$}
+\newcommand{\vd}    {|[fill=pink!50]| $v_d$}
+\newcommand{\vc}    {|[fill=cyan!80!blue!20]| $v_c$}
+
+\begin{figure}[!hbt]
+    \centering
+    \begin{tikzpicture}[cell/.style={rectangle,draw=black},
+                    space/.style={minimum height=1.5em,matrix of nodes,row sep=-\pgflinewidth,column sep=-\pgflinewidth},
+                    text depth=0.5ex,text height=2ex,nodes in empty cells,
+                    headers/.style={font=\footnotesize, color=blue!60!black!30},
+                    QD/.style={draw,thick,circle, radius = .1em, fill=green!80!yellow, inner sep=0},
+                    Benzene/.style={draw,thick, circle, radius = .1em, fill=red!80!yellow, inner sep=0},
+                    nlabelcolor/.style={gray},
+                    QDlabel/.style={label={above left:{\color{gray}#1}}}
+                    ]
+
+    \matrix (first) [space,nodes={cell,minimum width=2.3em, minimum height=2.3em}]
+    {
+    \viiQD  & \vh   & \vv   & \vd  & \vc  & 0    & 0    & 0    & 0    & 0    \\
+    \vh     & \viiQD& \vd   & \vv  & \vc  & 0    & 0    & 0    & 0    & 0    \\
+    \vv     & \vd   & \viiQD& \vh  & \vc  & 0    & 0    & 0    & 0    & 0    \\
+    \vd     & \vv   & \vh   & \viiQD & \vc  & 0    & 0    & 0    & 0    & 0    \\
+    \vc     & \vc   & \vc   & \vc  & \viiBZ & \vh  & 0    & 0    & 0    & \vh  \\
+    0       & 0     & 0     & 0    & \vh  & \viiBZ & \vh  & 0    & 0    & 0    \\
+    0       & 0     & 0     & 0    & 0    & \vh  & \viiBZ & \vh  & 0    & 0    \\
+    0       & 0     & 0     & 0    & 0    & 0    & \vh  & \viiBZ & \vh  & 0    \\
+    0       & 0     & 0     & 0    & 0    & 0    & 0    & \vh  & \viiBZ & \vh  \\
+    0       & 0     & 0     & 0    & \vh  & 0    & 0    & 0    & \vh  & \viiBZ \\ };
+    
+    \foreach \i/\x in {0/1, 1/2,2/3,3/4,4/5,5/6, 6/7, 7/8, 8/9, 9/10}{
+    \node[headers, anchor=north] at ([yshift=4ex]first-1-\x.north) {\i};
+    \node[headers, anchor=west] at ([xshift=-4ex]first-\x-1.west) {\i};
+    }
+    \end{tikzpicture}
+    \caption{Table shows distances between sites, as multiples of the C-C bond length ($d=\SI{1.40}{\angstrom}$) {\color{red} idk maybe add functions on how to generate table... prbly not nescessary though}}
+\end{figure}

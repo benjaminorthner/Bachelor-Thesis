@@ -1,0 +1,95 @@
+\section{Existing Implementation}
+In order to study the effects of impact ionisation in solar cells by means of small Hubbard clusters a program was written. The original numerical implementation was by Michael Innerberger \cite{innerberger} and extensions were carried out by Paul Worm \cite{worm_bachelor, worm_project} and Paul Prauhart \cite{prauhart}.
+\medskip
+
+In this section we will only give a brief overview of the main functionality of the code and refer the reader back to the previously mentioned three papers for more details.
+
+\subsection{Hubbard Model}
+To study the effect of impact ionisation in strongly correlated electron system the Hubbard model was used. It describes system of atoms as a lattice of $N_s\in \mathbb{N}$ sites, each of which can represent the location of at most one spin-up electron and one spin-down electron under the tight-binding approximation. The wave functions that describe such localised electrons are called Wannier-Functions.
+\medskip
+
+Using the second quantisation formalism of quantum mechanics, states of such many-body systems can be described purely by the occupation numbers of each site $n_{i\sigma} = \{0,1\}$. This allows us to write state vectors as $\ket{\psi}= \ket{n_{1\uparrow}n_{1\downarrow} n_{2\uparrow}n_{2\downarrow}\dots n_{N_{s}\uparrow}n_{N_{s}\downarrow}}$. The Hamiltonian can then be expressed using the following two terms
+\begin{equation}
+    \hat{H}_{\text{Hubbard}} = U \sum_i \hat{n}_{i\uparrow} \hat{n}_{i\downarrow} + \sum_{ij\sigma} v_{ji} \hat{c}^\dagger_{i\sigma} \hat{c}_{j\sigma}\label{eq:hubbard_hamiltonian}
+\end{equation}
+The first corresponding to the repulsive Coulomb interaction $U$ between two electrons with opposite spins located on the same site. The second represents the energy change in the system when an electron hops form site $j\to i$ with hopping amplitude $v_{ji}$. Here $\hat{c}_{i\sigma}^\dagger, \hat{c}_{j\sigma}$ are the fermionic creation and annihilation operators.
+\newline {\color{red} should I already include non-local coulomb here?}
+
+\subsection{Interaction with photons}
+The systems interaction with photons is modelled via a classical electric field pulse
+\begin{equation}
+    \Vec{E}(t) = \Vec{E}_0 \sin(\omega(t-t_p))\operatorname{e}^{-\frac{(t-t_p)^2}{2\sigma^2}} \label{eq:e_field}
+\end{equation}
+with frequency $\omega$, width $\sigma$ and peak time $t_p$. This can be integrated into our model by introducing a time dependent phase factor onto the hopping amplitude in a method called Peierl's substitution \cite{peierl}.
+\begin{equation}
+    v_{ij} \to v_{ij}(t) = v_{ij}\exp\left(-i\frac{e}{\hbar} \int_{\Vec{R}_i}^{\Vec{R}_j} \Vec{A}(\Vec{r},t) d\Vec{r}\right)\label{eq:hopping}
+\end{equation}
+Here $\Vec{A}$ is the electromagnetic vector potential which in a gauge where the scalar potential vanishes can be expressed via $\Vec{E}(t) = \partial_t \Vec{A}(t)$. {\color{red} negative sign or no negative sign in this equation?} Using an approximation for the integral in (\ref{eq:hopping}) and the equation (\ref{eq:e_field}) one arrives at
+\begin{equation}
+    v_{ij} \approx v_{ij} \exp\left(ia[\cos(\omega (t-t_p))-b] e^{-\frac{(t-t_p)^2}{2\sigma^2}}\right)
+\end{equation}
+where $a$ and $b$ are tunable parameters.
+
+
+\subsection{Time-Evolution}
+
+Our main interest is to investigate impact ionisation in the system, after being exposed to the electric field pulse. Prior to this paper this was achieved by looking at the observable double occupation $\braket{\hat{d}(t)} = \braket{\hat{n}_{i\uparrow}(t) \hat{n}_{i\downarrow}(t)}$ since the rise of its mean value after initial excitation was an indicator for impact ionisation. In order to compute this quantity, we need the ability to time-evolve any initial state $\ket{\psi(t=0)} = \ket{\psi_0}$ of the system. Using the time dependent Schrödinger equation
+\begin{equation}
+    i\hbar \frac{\partial}{\partial t}\ket{\psi(t)} = \hat{H}(t)\ket{\psi(t)}\label{eq:time_evolve}
+\end{equation}
+one finds that the time evolution can be computed by
+\begin{equation}
+    \ket{\psi (t)} = \mathcal{T} \exp\left(-\frac{i}{\hbar}\int_0^t H(t') dt'\right) \ket{\psi_0}
+\end{equation}
+where $\mathcal{T}$ is the time-ordering operator. By numerically deviding $t$ into $m$ small time steps $\tau$ it is justified to use Magnus-expansion \cite{magnus} of order zero and thus neglect the time-ordering operator. Assuming the time steps are small enough we can approximate the integral in (\ref{eq:time_evolve}) over one time step using the midpoint rule. This leads to the following recursive formula
+\begin{equation}
+    \ket{\psi(m\tau + \tau)} = \exp\left(-\frac{i}{\hbar} H\left(m\tau + \frac{\tau}{2}\right)\right)\ket{\psi(m\tau)}
+\end{equation}
+Which can be computed using the Krylov matrix exponential method \cite{innerberger}.
+
+\subsection{Finding the Initial State}
+For impact ionisation we are interested in half-filled systems, where the number of spin-up and spin-down electrons are the same. {\color{red} because then they are Mott Insulators?}. This is an invariant property of the systems and does not change over time.
+\medskip
+
+It is assumed that before the electric field pulse, the system is in thermal equilibrium and occupies the state with the lowest energy (the ground state). To find this state numerically a variant of the power iteration method was implemented \cite{innerberger}. From a randomly initialised starting state, it iterativley computes the eigenenergy with the largest absolute value and its corresponding eigenstate, thus recursively converging on the ground state.
+
+\subsection{Memory Management}
+The predominant limitation of this implementation is the memory it requires. For a system with $N_s$ sites and a fixed number of electrons the dimension of its Hilbert space , i.e. the number of linearly independent states, is given by 
+\begin{equation}
+    \dim \left[\mathcal{H}^{n_\uparrow}_{n_\downarrow} (N_s)\right] = \begin{pmatrix}N_s \\ n_\uparrow\end{pmatrix} \begin{pmatrix}N_s \\ n_\downarrow\end{pmatrix}
+\end{equation}
+which for a half-filled system with $14$ sites is about $\SI{12e6}{}$. A Hamiltonian matrix of that size, with elements of the data type double, would take over $1000$ Terabytes of memory. However due to the Hamiltonian being made up of mostly zeros, it can be stored and manipulated in a highly compressed sparse matrix format \cite{innerberger}, substantially reducing the memory needs.
+\medskip
+
+The states of the system are stored as integers, whose binary representations correspond to the occupation configuration of the sites. Actions on these states like creation, annihilation and hoppings have been implemented as bitwise operations.
+\medskip
+ 
+With all these data saving measures in place, it was possible to compute the time evolution of 2D square lattices and chains of up to 14 sites, above which memory again becomes the limiting factor.
+
+
+
+\subsection{Spectral Functions}
+\begin{itemize}
+    \item what is a spectral function and why is it interesting
+    \item equilibrium vs non-equilibrium spectral functions
+    \item how fft was done, broadening, extension of domain etc.
+\end{itemize}
+Another way of obtaining information about the states of a system is using spectral functions $A(\omega, t)$. They are functions of energy and provide a measure of which states are occupied.
+(spectrum of one-particle excitations)
+
+The existing code offers two methods of computing spectral functions \cite{spectral_function}
+
+\subsubsection{Lehmann Spectra}
+First implemented by Michael Innerberger
+
+\subsubsection{Fourier Transforms of Non-Equilibrium Green's Functions}
+First implemented by Paul Worm in Bachelor and efficiency improved by Prauhart.
+
+Non-equilibrium spectral function $A_{ij\sigma}^\gtlt(\omega, t)$ is obtained via a forward transform of the Greens function $G_{ij\sigma}^\gtlt (t,t')$
+\begin{equation}
+    A_{ij\sigma}^\gtlt = \frac{1}{\pi} \operatorname{Im}\int_0^\infty \operatorname{e}^{i\omega t_{rel}} G_{ij\simga}^\gtlt (t,t+t_{rel}) dt_{rel}
+\end{equation}
+
+\begin{equation}
+    G_{i j \sigma}^{\gtlt}\left(t, t^{\prime}\right)=\mathrm{i}\left\langle\psi\left(t^{\prime}\right)\left|\hat{c}_{j \sigma}^{\dagger} \mathcal{T} e^{-\mathrm{i} \int_{t}^{t^{\prime}} H(\tau) \mathrm{d} \tau} \hat{c}_{i \sigma}\right| \psi(t)\right\rangle
+\end{equation}

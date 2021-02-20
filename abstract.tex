@@ -1,0 +1,18 @@
+%   Reduce the margin:
+\def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
+\let\endchangemargin=\endlist 
+
+% title
+{\small\begin{center}%
+\bfseries{Abstract}
+\end{center}}
+
+% Abstract
+\begin{changemargin}{1cm}{1cm}
+
+Solar power is one of the most promising low carbon energy technologies, allowing the generation of electricity from free and abundant sunlight. With ever increasing energy demands on top of the looming threat of a climate crisis, innovations in this field are essential. However, progress in conventional silicon-based solar cell technologies has begun to stagnate, as they approach their inherent maximum efficiency of $34\%$, the Shockley-Queisser-limit \cite{shockley_queisser}. Among a few other proposed alternatives, heterostructures of transition metal oxides may present a solution to this problem, as they display an effect called ``impact ionisation''.
+
+\smallskip
+
+This thesis build upon previous works \cite{innerberger, worm_bachelor, prauhart, worm_project} which have implemented the Hubbard model to investigate impact ionisation in a small cluster of atoms within oxide heterostructures being excited by a short light pulse. We expand the capabilities of the existing code to include non-local coulomb interactions and set up the framework needed to allow the investigation of impact ionisation in a system consisting of a quantum dot coupled to a benzene ring. The Benzene Ring is modelled as a mono-atomic chain with periodic boundary conditions, and the non-local coulomb interactions calculated via the Pariser-Parr-Pople method.
+\end{changemargin}

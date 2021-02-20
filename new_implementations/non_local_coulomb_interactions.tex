@@ -1,0 +1,36 @@
+\section{Non-local Coulomb Interactions}
+
+\begin{itemize}
+    \item Double occupation no longer a good measure for impact ionisation
+    \item look at expectation of Potential energy instead (interaction-energy)
+    \item electron hole symmetry and hartree term
+\end{itemize}
+
+One of the goals of this thesis is to expand the capabilities of the existing code to include non-local coulomb interactions. 
+
+\subsection{Electron-Hole Symmetry}
+In the existing implementation the on-site repulsive coulomb force is accounted for in the hamiltonian as
+\begin{equation}
+    \hat{H}=U \sum_{i} \hat{n}_{i \uparrow} \hat{n}_{i \downarrow}+\sum_{i j \sigma} v_{j i} \hat{c}_{i \sigma}^{\dagger} \hat{c}_{j \sigma}\label{eq:local_ham_nonsym}
+\end{equation}
+In the current form, this Hamiltonian changes differently upon addition of an electron compared to an addition of a hole. However, it will later prove to be rather useful to have the Hamiltonian be electron-hole symmetric, and ideally take the following form
+\begin{equation}
+    \hat{H} = U \sum_i \left(\hat{n}_{i\uparrow}-\frac{1}{2}\right)\left(\hat{n}_{i\downarrow}-\frac{1}{2}\right)+\sum_{i j \sigma} v_{j i} \hat{c}_{i \sigma}^{\dagger} \hat{c}_{j \sigma}\label{eq:local_ham_sym}
+\end{equation}
+ The numerical implementation of (\ref{eq:local_ham_sym}) is however less practical. Thus, in order to achieve electron-hole symmetry using (\ref{eq:local_ham_nonsym}) we choose an appropriate value for $v_{ii}$ (chemical potential) ($v_{ii} = -U / 2$)
+ \medskip
+ 
+ The extension to nonlocal coulomb interactions follows rather naturally
+ \begin{equation}
+    \hat{H}= \sum_{ij\sigma\sigma'} U_{ij\sigma\sigma'}\hat{n}_{i \sigma} \hat{n}_{j\sigma'}+\sum_{i j \sigma} v_{j i} \hat{c}_{i \sigma}^{\dagger} \hat{c}_{j \sigma}\label{eq:ham_nonsym}
+\end{equation}
+Because only the relationship between the spins $\sigma$ and $\sigma'$ can have a physical effect we can split $U_{ij\sigma\sigma'}$ into the two $N_s\times N_s$ matrices $U_{ij}^{\text{same-spin}}$ and $U_{ij}^{\text{opp-spin}}$. (these have to be generated for each system during the set up part of the code, and get passed through into hamiltonian assembly code)
+\medskip
+
+electron hole symmetry is again achieved via a choice of chemical potential (hartree term?). Sum over any row of both U matrices
+\begin{equation}
+    v_{ii} = - \frac{1}{2}\sum_{j} U_{1j}^{\text{opp-spin}} + U_{1j}^{\text{same-spin}}
+\end{equation}
+
+\subsection{Double occupation no longer a good measure}
+In the preceding works \cite{innerberger,worm_bachelor,worm_project,prauhart}, impact ionisation was studied by looking at how the expectation value of the mean double occupation observalbe changed over time, after initial excitation (this is proportional to impact ionisation) (stated in Time-Evolution subsection). When we add non-local coulomb interactions we loose this proportionality and need to find a different measure instead (Potential Energy).

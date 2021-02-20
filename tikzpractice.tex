@@ -1,0 +1,79 @@
+% inspo for code diagram https://texample.net/tikz/examples/tcp-state-machine/
+
+\begin{tikzpicture}[%
+    QD/.style={draw,thick,circle, radius = .1em, fill=green!80!yellow},
+    Benzene/.style={draw,thick, circle, radius = .1em, fill=red!80!yellow}
+    ]
+    
+    \newdimen \qdd
+    \qdd = 2cm
+    %QD nodes    
+    \node[QD] at (0,0)          (QD0){};
+    \node[QD] at (\qdd,0)       (QD1){};
+    \node[QD] at (0,\qdd)       (QD2){};
+    \node[QD] at (\qdd,\qdd)    (QD3){};
+    
+    \draw[thick] (QD0.east) -- (QD1.west);
+    \draw[thick] (QD2.east) -- (QD3.west);
+    \draw[thick] (QD2.south) -- (QD0.north);
+    \draw[thick] (QD3.south) -- (QD1.north);
+    
+    
+    %Benzene Nodes
+    \newdimen\R
+    \R=1.5cm
+    \tikzset{shift={(5,1)}}
+    \draw[thick] (0:\R)
+    \foreach \x in {60,120,...,360} {  -- (\x:\R) }
+    -- cycle (360:\R) node[Benzene] (B0){}
+    -- cycle (300:\R) node[Benzene] (B1){}
+    -- cycle (240:\R) node[Benzene] (B2){}
+    -- cycle (180:\R) node[Benzene] (B3){}
+    -- cycle (120:\R) node[Benzene] (B4){}
+    -- cycle  (60:\R) node[Benzene] (B5){};
+    
+    \tikzset{shift={(0,0)}}
+    \foreach \x in {1, 3} \draw[color=red, thick] (QD\x.east) to [out=0, in=180] (B3.west);
+    \draw[color=red, thick] (QD0.south) to [out = 270, in=180] (B3.west);
+    \draw[color=red, thick] (QD2.north) to [out = 90, in=180] (B3.west);
+\end{tikzpicture}
+
+\vskip 5cm
+\begin{tikzpicture}[decoration=snake,
+                    Benzene/.style={draw,thick, circle, radius = .1em, fill=red!80!yellow}
+                    ]
+    % RING %
+    \newdimen\R
+    \R=1.5cm
+    \draw[thick] (0:\R)
+    \foreach \x in {60,120,...,360} {  -- (\x:\R) }
+    -- cycle (360:\R) node[Benzene, label=3] (Bc3){}
+    -- cycle (300:\R) node[Benzene, label=4] (Bc4){}
+    -- cycle (240:\R) node[Benzene, label=5] (Bc5){}
+    -- cycle (180:\R) node[Benzene, label=0] (Bc0){}
+    -- cycle (120:\R) node[Benzene, label=1] (Bc1){}
+    -- cycle  (60:\R) node[Benzene, label=2] (Bc2){};
+    
+    \foreach \x in {0,1,2,3,4,5}{
+    \draw[->, decorate, thick, yellow!80!red] ($(Bc\x) + (-1, 1)$) -- (Bc\x);
+    }
+    
+    % CHAIN %
+    \foreach \x in {0,1,2,3,4,5}{
+    \node[Benzene, label=below:\x] at ($(1.3*\x,0) + (7,0)$)  (B\x){};
+    \draw[->, decorate, thick, yellow!80!red] ($(B\x) + (-1, 1)$) -- (B\x);
+    }
+    
+    \draw[dashed] ($(B0) - (0.7,0)$) -- (B0);
+    \draw[thick] (B0) -- (B1);
+    \draw[thick] (B1) -- (B2);
+    \draw[thick] (B2) -- (B3);
+    \draw[thick] (B3) -- (B4);
+    \draw[thick] (B4) -- (B5);
+    \draw[dashed] (B5) -- ($(B5) + (0.7,0)$);
+
+    % MIDDLE ARROW %
+    \node[] at ($(Bc3)!0.5!(B0)$) (mid){};
+    \draw[->, double, line width=1pt, -Implies, double distance=3pt] ($(mid) - (0.7,0)$) -- ($(mid) + (0.7,0)$);
+    
+    \end{tikzpicture}

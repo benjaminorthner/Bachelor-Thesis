@@ -1,0 +1,24 @@
+\section{Quantum Dot}
+\begin{itemize}
+    \item what is a quantum dot, why do we use one
+    \item PPP-type model with 2x2 grid (proof of concept for now... code structure makes changing to more realistic scenario easy)
+    \item finding that $U=2.406$ gives evenly spaced peaks in the spectrum
+    \item interaction energy seems to show transition at $\omega\approx 2$
+    \item comparison to Julia code
+    \item which hoppings are time dependent
+\end{itemize}
+
+Quantum dots (QD) are nanoscopic semiconducting particles that display interesting quantum mechanical effects. Due to their small size the energy levels of electrons within them become quantized, much like in atoms. Unlike atoms however, the size of QDs can be chosen arbitrarily, making their absorption spectra highly tunable.  Together with cost-effective manufacturing processes this makes QDs an enticing candidate for new photovoltaic technologies.
+\medskip
+
+Their high efficiency in energy conversion has been shown experimentally, and impact ionisation has been proposed as an explanation \cite{impact_io_in_qd}. In this work we want to first implement a quantum dot into our model and see if we see impact ionisation (unlikely). But what we really want to see if a quantum dot exposed to light induces impact ionisation within a molecule attached to it (Benzene)
+
+\subsection{Geometry}
+ 
+ In implementing quantum dot we had two choices. Either we implement a new type of site, with multiple energy levels, or we model the quantum dot as a particular arrangement of sites, which we engineer to have the desired effective energy levels. (chose second option as it requires less alteration of existing code)
+ 
+ \medskip
+ 
+ For all computations done in this work the QD is modelled as a $2\times 2$ lattice. $v_h = v_v = 1.0$ ($v_d = 0$). Non-local coulomb interactions also calculated with PPP model and distances were calculated by assuming lattice constant was same as $C-C$ bond length ($\SI{1.4}{\angstrom}$). Not physical but we r just looking for proof of concept for now.
+ 
+ \subsection{Pulse direction and hopping time dependence}

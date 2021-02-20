@@ -1,0 +1,122 @@
+\section{Solar Cells}
+
+Solar cells are devices that convert radiation energy to electrical energy via the photovoltaic effect. This is most commonly achieved using the semiconductor silicone. In order to understand how they work, we must first understand the electron structure of silicone.
+
+\medskip
+
+In a semiconductor when, $T=\SI{0}{\kelvin}$, all electrons occupy the so called valence band, which is separated from the unoccupied conductance band by an energy gap of $\sim \SI{1}{eV}$. One way for an electron to traverse this gap is by absorbing a photon with a energy higher than that of the band gap. This excitation of an electron into the conduction band leads to an increase in the electric current in the material. If the energy of the photon far exceeds that of the gap, the promoted electron bleeds off this excess energy in a process called thermalisation, in which phonons are excited leading to heating up of the material, and the excess energy effectively being lost. If the photon's energy is lower than that of the gap, it does not get absorbed at all. Because the Sun radiates light on a spectrum, all solar cells  of this type are subject to an inherent limit in efficiency, the Shockley-Queisser-limit, which under ideal conditions can reach a maximum of about $34\%$ \cite{shockley_queisser}.
+
+\medskip
+
+Various methods do exist that have the potential to overcome this limit. Among these is an effect called ``impact ionisation''. To a small degree this effect occurs in most materials and allows for the excess energy of an excited electron to be used in the excitation of a second electron, instead of being lost to thermalisation. The factor deciding which of the two effects dominates, is the time-scale on which they occur. In semiconductors relaxation via phonon excitations occur on a time-scale of about $0.1 - 10 \si{\pico\second}$ where for impact ionisation it is about $1-100\si{\pico\second}$, thus making the former far more likely. However, in some materials with strongly correlated electron systems, such as oxide heterostructures, the time-scale for impact ionisation can be as low as $\SI{10}{\femto\second}$, thus making it the predominant process for electron relaxation \cite{time_scales}.
+
+
+\colorlet{conductance}{black!7}
+\colorlet{valence}{cyan!80!yellow!40}
+\colorlet{cphoton}{yellow!70!red}
+\colorlet{cphonon}{red!80!yellow}
+\colorlet{cimpact}{cyan!70!red}
+
+
+
+\begin{figure}[!hbt]
+    \begin{minipage}[b]{.48\textwidth}
+        \centering
+        \begin{tikzpicture}[decoration=snake,
+                        hole/.style={circle, draw, fill=white},
+                        electron/.style={circle, draw, fill=cyan!80!yellow},
+                        std_arrow/.style={->, >=Latex, thick},
+                        photon/.style={->, thick, decorate, cphoton},
+                        phonon/.style={->, thick, decorate, cphonon}
+                        ]
+            %%%%%%%%%%%%%%%%%%%%%
+            % ELECTRONS & BANDS %
+            %%%%%%%%%%%%%%%%%%%%%
+            
+            \newdimen \gap
+            \newdimen \xshift
+            \gap = 1.2cm
+            \xshift = 1.1cm
+            \draw[fill=valence] (0,0) rectangle (5, -1.5);
+                \node[label={[valence!200]above right: Valence Band}, inner sep = 0.5] at (0, -1.5){};
+            \draw[fill=conductance] (0, \gap) rectangle ($(5, 2.8) + (0,\gap)$);
+                \node[label={[conductance!300]below right: Conduction Band}, inner sep = 0.5] at ($(0, 2.8) + (0, \gap)$){};
+            \node[hole] at (\xshift,-0.3) (H){};
+            \node[electron] at ($(H) + (0,3.5)$) (E1){};
+            \node[electron] at ($(E1) + (1.3, -1.7)$) (E2){};
+            
+            %%%%%%%%%%%%%%%%%%
+            % ARROWS N STUFF %
+            %%%%%%%%%%%%%%%%%%
+            
+            \newdimen\phononlen
+            \phononlen = 1.8cm
+            \draw[photon] (0.05,0.4\gap) -- (\xshift, 0.4\gap) node[midway, above]{$\hbar\omega$};
+            \draw[std_arrow] (H) -- (E1);
+            \draw[std_arrow] (E1) -- (E2)
+                node[pos=0.2](s1){}
+                node[pos=0.4](s2){}
+                node[pos=0.6](s3){};
+            \foreach \i in {1,2,3}{
+            \draw[phonon] ($(s\i) + (0.2, 0)$) -- ($(s\i) + (\phononlen,0)$);}
+            \node[label=right:\color{cphonon}$\hbar \Omega$, inner sep = 0.2] at ($(s2) + (0.2, 0) + (\phononlen, 0)$){};
+            
+            \draw[->,>=Latex, ultra thick, black!20] (-0.5, -1.5) -- ($(-0.5, 3.3)+(0,\gap)$) node[right]{$E$};
+        \end{tikzpicture}%
+        \caption{After excitation by a photon, the excess energy of the electron is lost to thermalisation.\newline}
+        \label{fig:thermalisation}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{.48\textwidth}
+        \centering
+        \begin{tikzpicture}[hole/.style={circle, draw, fill=white},
+                        electron/.style={circle, draw, fill=cyan!80!yellow},
+                        std_arrow/.style={->, >=Latex, thick},
+                        photon/.style={->, thick, decorate, decoration=snake, cphoton},
+                        phonon/.style={->, thick, decorate, decoration=snake, cphonon},
+                        impact_io/.style={->, thick, decorate, decoration=snake, cimpact},
+                        brace/.style={decorate, decoration={brace, amplitude=6pt}, thick, color=gray}
+                        ]
+            %%%%%%%%%%%%%%%%%%%%%
+            % ELECTRONS & BANDS %
+            %%%%%%%%%%%%%%%%%%%%%
+            
+            \newdimen \gap
+            \newdimen \xshift
+            \gap = 1.2cm
+            \xshift = 1.1cm
+            \draw[fill=valence] (0,0) rectangle (5, -1.5);
+                \node[label={[valence!200]above right: Valence Band}, inner sep = 0.5] at (0, -1.5){};
+            \draw[fill=conductance] (0, \gap) rectangle ($(5, 2.8) + (0,\gap)$);
+                \node[label={[conductance!300]below right: Conduction Band}, inner sep = 0.5] at ($(0, 2.8) + (0, \gap)$){};
+            \node[hole] at (\xshift,-0.3) (H1){};
+            \node[hole] at ($(H1) + (2.5,0)$) (H2) {};
+            \node[electron] at ($(H) + (0,3.5)$) (E1){};
+            \node[electron] at ($(E1) + (1.3, -1.7)$) (E2){};
+            \node[electron] at ($(H2) + (0, \gap) + (0, 0.6)$) (E3){};
+            
+            %%%%%%%%%%%%%%%%%%
+            % ARROWS N STUFF %
+            %%%%%%%%%%%%%%%%%%
+            
+            \newdimen\phononlen
+            \phononlen = 1.8cm
+            \draw[photon] (0.05,0.4\gap) -- (\xshift, 0.4\gap) node[midway, above]{$\hbar\omega$};
+            \draw[std_arrow] (H1) -- (E1);
+            \draw[std_arrow] (E1) -- (E2) node[pos=0.43, inner sep=0] (E1_E2){};
+            \draw[std_arrow] (H2) -- (E3) node[pos=0.5, inner sep=0] (H2_E3){};
+            
+            \draw[impact_io] (E1_E2) to[out=260,in=180] (H2_E3);
+            
+            \draw[->,>=Latex, ultra thick, black!20] (-0.5, -1.5) -- ($(-0.5, 3.3)+(0,\gap)$) node[right]{$E$};
+            
+            %%%%%%%%%%
+            % Braces %
+            %%%%%%%%%%
+            \draw[brace] ($(E3.east) + (0.2,0)$) -- ($(H2.east) + (0.2,0)$) node[midway,right,xshift=.2cm] {$\Delta E_1$};
+            \draw[brace] ($(E2.east) + (0.2,1.7)$) -- ($(E2.east) + (0.2,0)$) node[midway, right, xshift=.2cm] {$\Delta E_1$};
+        \end{tikzpicture}
+        \caption{After excitation by a photon, the excess energy is used via impact ionisation to excite a second electron to the conduction band.}
+        \label{fig:impact_ionisation}
+    \end{minipage}
+\end{figure}

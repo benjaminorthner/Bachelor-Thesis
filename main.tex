@@ -1,0 +1,140 @@
+\documentclass[oneside]{scrbook}			%
+\usepackage[english]{babel}
+\usepackage[pdftex]{graphicx} 	% Einbinden von Bildern
+\usepackage{tabularx}
+\usepackage{float}			%H in grafiken
+\usepackage{amssymb}
+\usepackage[left=2.5cm, right=2.5cm, bottom=2.5cm, top=2cm]{geometry}
+\usepackage{verbatim}
+\usepackage{lipsum}
+\usepackage{siunitx} % SI_UNITS https://www.dickimaw-books.com/latex/thesis/html/siunitx.html
+\usepackage{amsmath}
+\usepackage{braket} %bra-ket notation
+\usepackage{hyperref}
+\usepackage{epstopdf}
+\usepackage{graphicx}
+\usepackage{capt-of}
+\usepackage{tikz}
+\usepackage[font=small,labelfont=bf,labelsep=space]{caption}
+\usepackage[caption=false,font=footnotesize]{subfig}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DOC FORMAT SETTINGS
+\setlength\parindent{0pt}
+\captionsetup{figurename=Fig.,	tablename=Tab.	}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TIKZ SETTINGS
+\usetikzlibrary{shapes.geometric,
+                calc, %for relative coord calculations
+                decorations.pathmorphing, %for snake lines
+                decorations.pathreplacing, %for braces
+                shapes,
+                arrows.meta, % for double arrow
+                backgrounds,
+                positioning} % for position along lines
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Custom functions
+
+\newcommand{\gtlt}{% greater than less than
+{\begin{tikzpicture}%
+\node[inner sep=0, outer sep=0] at (0,0) {$\scriptstyle <$};
+\node[inner sep=0, outer sep=0] at (0,-0.15) {$\scriptstyle >$};
+\end{tikzpicture}%
+}}
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{titlepage}
+\begin{center}
+  \includegraphics[width=35mm]{./graph/TU_Signet.pdf} \\[10mm]
+  {\LARGE \textsc{Bachelor Thesis:}}\\[10mm]
+  {\LARGE Impact Ionisation in Quantum Dot - Benzene Heterostructures with non-local coulomb Interactions }\\[10mm]
+  	Supervisors:\\
+  Prof. Dr. Karsten Held,\\
+  Projektass. Paul Worm, PhD\\
+  \vspace{5mm}
+  Institute of Solid State Physics\\
+  Quantum many body physics group\\
+  Technische Universit\"at Wien\\[5mm]
+  
+  by\\[5mm]
+  \textbf{Benjamin Orthner}\\
+  00473828
+\end{center}
+  \date{\today}
+\vspace{\fill}
+\begin{flushright} %\begin{bottompar} 
+\makeatletter
+\@date
+\makeatother
+\end{flushright}
+\end{titlepage}
+
+
+%\maketitle 
+\thispagestyle{empty} \clearpage										% Deckblatt
+\pagestyle{plain} \pagenumbering{Roman} %\tableofcontents 					% Verzeichnisse
+
+\pagenumbering{arabic}
+\counterwithout{footnote}{chapter}
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+%\addcontentsline{toc}{section}{Abstract}
+
+\input{abstract.tex}
+\tableofcontents
+\chapter{Introduction}
+\input{introduction/solar_cells}
+\input{introduction/existing_implementation}
+\input{introduction/introduction}
+\input{introduction/code_structure}
+%
+\chapter{New Implementations}
+\input{new_implementations/non_local_coulomb_interactions}
+\input{new_implementations/benzene_ring}
+\input{new_implementations/quantum_dot}
+\input{new_implementations/coupled}
+%
+\chapter{Results}
+\input{results/isolated_qd}
+\input{results/isolated_benzene}
+\input{results/coupled_system}
+\newpage
+ 1. Introduction to this topic
+    - keep it short (1-2pages)
+    - reference Hörbinger + original PPP papers
+    - Innerberger
+    
+ 2. Code that I implemented
+    - non-local interaction
+    - potential energy (instead of double occupancy)... double occupancy not a good measure of pot energy anymore
+    - vii (Hubbard term)
+
+3. Results
+    - Greens functions
+    - show QD and Benzene isolated (compare to PPP paper)
+    - show coupled QD and Benzene (with vc = 0 and with vc != 0)
+    
+4. Outlook
+    - this was about the setup
+    - next work is about analysing this system (impact ionisation on BzRing or QD)
+    - why no transitions as w=4 (maybe some k point stuff)
+    
+What the reader should get from the thesis
+1.(How the new implemented code works and how one can use it)
+2.(How does a spectrum of QD to Benzene ring look)
+
+\newpage
+
+\bibliographystyle{unsrt} % https://www.overleaf.com/learn/latex/Bibtex_bibliography_styles
+\bibliography{bibliography.bib} 
+
+\newpage
+\input{tikzpractice}
+\end{document}
