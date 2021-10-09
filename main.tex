@@ -7,6 +7,7 @@
 \usepackage[left=2.5cm, right=2.5cm, bottom=2.5cm, top=2cm]{geometry}
 \usepackage{verbatim}
 \usepackage{lipsum}
+\usepackage{booktabs} % for nicer tables
 \usepackage{siunitx} % SI_UNITS https://www.dickimaw-books.com/latex/thesis/html/siunitx.html
 \usepackage{amsmath}
 \usepackage{braket} %bra-ket notation
@@ -53,21 +54,35 @@
 \begin{document}
 \begin{titlepage}
 \begin{center}
-  \includegraphics[width=35mm]{./graph/TU_Signet.pdf} \\[10mm]
-  {\LARGE \textsc{Bachelor Thesis:}}\\[10mm]
-  {\LARGE Impact Ionisation in Quantum Dot - Benzene Heterostructures with non-local coulomb Interactions }\\[10mm]
-  	Supervisors:\\
-  Prof. Dr. Karsten Held,\\
-  Projektass. Paul Worm, PhD\\
-  \vspace{5mm}
-  Institute of Solid State Physics\\
-  Quantum many body physics group\\
-  Technische Universit\"at Wien\\[5mm]
-  
-  by\\[5mm]
-  \textbf{Benjamin Orthner}\\
-  00473828
+    \vspace*{15mm}
+    \includegraphics[width=100mm]{./graph/TU_Logo.pdf}
+    
+    \vspace{20mm}
+    
+    {\Large \textsc{Bachelor Thesis:}}
+    
+    \vspace{7mm}
+    
+    \rule{\textwidth}{0.4pt}\vspace{5mm}
+    {\LARGE \textbf{Impact Ionisation in Quantum Dot - Benzene Heterostructures with non-local coulomb Interactions}} just a placeholder title\\[3mm]
+    \rule{\textwidth}{0.4pt}
+    
+    \vspace{15mm}
+    \emph{written by}\\
+    {\Large \textsc{Benjamin Orthner}}\\
+    Immatriculation Number: 00473828, Study Code: 033 261\\
+    
+    \vspace{15mm}
+    \emph{supervised by}\\
+    {\Large \textsc{Univ.Prof. Dr. Karsten Held}}\\
+    TU Wien, Institute for Solid State Physics\\
+    
+    \vspace{15mm}
+    \emph{co-supervised by}\\
+    {\Large \textsc{Projektass. Paul Worm, PhD}}\\
+    TU Wien, Institute for Solid State Physics\\
 \end{center}
+
   \date{\today}
 \vspace{\fill}
 \begin{flushright} %\begin{bottompar} 
@@ -87,7 +102,7 @@
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 %\addcontentsline{toc}{section}{Abstract}
 
-\input{abstract.tex}
+\input{other/abstract.tex}
 \tableofcontents
 \chapter{Introduction}
 \input{introduction/solar_cells}
@@ -96,9 +111,10 @@
 \input{introduction/code_structure}
 %
 \chapter{New Implementations}
+\input{new_implementations/pretext.tex}
 \input{new_implementations/non_local_coulomb_interactions}
-\input{new_implementations/benzene_ring}
 \input{new_implementations/quantum_dot}
+\input{new_implementations/benzene_ring}
 \input{new_implementations/coupled}
 %
 \chapter{Results}
@@ -131,10 +147,15 @@ What the reader should get from the thesis
 2.(How does a spectrum of QD to Benzene ring look)
 
 \newpage
+\chapter*{Parameters for figures}
+\input{other/data_table}
+\newpage
+
+
 
 \bibliographystyle{unsrt} % https://www.overleaf.com/learn/latex/Bibtex_bibliography_styles
-\bibliography{bibliography.bib} 
+\bibliography{other/bibliography.bib} 
 
 \newpage
-\input{tikzpractice}
+\input{other/tikzpractice}
 \end{document}

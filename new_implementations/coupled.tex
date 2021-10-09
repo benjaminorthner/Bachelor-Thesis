@@ -1,4 +1,11 @@
 \section{Coupling QD-Benzene}
+\color{blue}
+    The coupled QD-Benzene system is a combination of the above two systems with an extra hopping from all QD sites to a single Benzene site. Again the coulomb interactions are calculated via the Ohno interpolation and stored in the $U$ matrices. The distances used in the calculations for the $U$-matrix elements are shown in Fig. \ref{fig:coupled_distances}. The hopping amplitudes are the same as in the isolated systems with the addition of a parameter $v_c$, representing the hopping between the QD and the benzene ring. By setting $v_c = 0$ we would expect to see the same spectra as with the Isolated systems.{\color{red} at least for the QD, but for benzene idk because benzene not hit by laser pulse in this case... or is that irrelevant for the spectrum?}  Important to note: The on-site hoppings must be calculated individually for the Benzene and the QD sites. The hopping matrix is shown in Fig. \ref{fig:coupled_hoppings}
+    \medskip
+    
+    For now we only investigate how the system responds to the light pulse only interacting with the QD sites. Thus we set all the benzene hoppings and the hoppings between the QD and benzene to be non-time dependent.
+\color{black}
+
 \begin{itemize}
     \item decided that investigate pulse only hitting quantum dot
     \item U matrices for couples systems
@@ -6,6 +13,8 @@
     \item full coupling vs half coupling
     \item {\color{red} why would we expect to see impact ionisation in such a coupled system? previous papers?}
     \item separate $v_ii$ values for QD and Benzene
+    \item why lehmann spectrum can not be computed and we need green
+    \item hopping between QD and benzene NOT TIME DEPENDENT (pulse only on QD)
 \end{itemize}
 
 \usetikzlibrary{matrix, positioning}
@@ -23,7 +32,7 @@
                     space/.style={minimum height=1.5em,matrix of nodes,row sep=-\pgflinewidth,column sep=-\pgflinewidth},
                     text depth=0.5ex,text height=2ex,nodes in empty cells,
                     headers/.style={font=\footnotesize, color=blue!60!black!30},
-                    QD/.style={draw,thick,circle, radius = .1em, fill=green!80!yellow, inner sep=0},
+                    QD/.style={draw,thick,circle, radius = .1em, fill=black!40, inner sep=0},
                     Benzene/.style={draw,thick, circle, radius = .1em, fill=red!80!yellow, inner sep=0},
                     nlabelcolor/.style={gray},
                     QDlabel/.style={label={above left:{\color{gray}#1}}}
@@ -32,16 +41,16 @@
     %maybe use brace to indicate Benzene and QD regions https://texample.net/tikz/examples/model-physics/
     \matrix (first) [space,nodes={cell,minimum width=2em, minimum height=2em}]
     {
-    \my         & 1             & 1         & $\sqrt{2}$& \mg 0     & 0         & 0         & 0         & 0         & 0        \\
-    1           & \my           & $\sqrt{2}$& 1         & \mg 0     & 0         & 0         & 0         & 0         & 0        \\
-    1           & $\sqrt{2}$    & \my       & 1         & \mg 0     & 0         & 0         & 0         & 0         & 0        \\
-    $\sqrt{2}$  & 1             & 1         & \my       & \mg 0     & 0         & 0         & 0         & 0         & 0        \\
-    \mg 0       & \mg 0         & \mg 0     & \mg 0     & \my       & 1         & $\sqrt{3}$& 2         & $\sqrt{3}$& 1        \\
-    0           & 0             & 0         & 0         & 1         &  \my      & 1         & $\sqrt{3}$& 2         & $\sqrt{3}$ \\
-    0           & 0             & 0         & 0         & $\sqrt{3}$& 1         & \my       & 1         & $\sqrt{3}$& 2        \\
-    0           & 0             & 0         & 0         & 2         & $\sqrt{3}$& 1         &  \my      & 1         & $\sqrt{3}$ \\
-    0           & 0             & 0         & 0         & $\sqrt{3}$& 2         & $\sqrt{3}$& 1         & \my       & 1        \\
-    0           & 0             & 0         & 0         & 1         & $\sqrt{3}$& 2         & $\sqrt{3}$& 1         &  \my \\ };
+    \my         & 1             & 1         & $\sqrt{2}$& \mg -     & -         & -         & -         & -         & -        \\
+    1           & \my           & $\sqrt{2}$& 1         & \mg -     & -         & -         & -         & -         & -        \\
+    1           & $\sqrt{2}$    & \my       & 1         & \mg -     & -         & -         & -         & -         & -        \\
+    $\sqrt{2}$  & 1             & 1         & \my       & \mg -     & -         & -         & -         & -         & -        \\
+    \mg -       & \mg -         & \mg -     & \mg -     & \my       & 1         & $\sqrt{3}$& 2         & $\sqrt{3}$& 1        \\
+    -           & -             & -         & -        & 1         &  \my      & 1         & $\sqrt{3}$& 2         & $\sqrt{3}$ \\
+    -           & -             & -         & -         & $\sqrt{3}$& 1         & \my       & 1         & $\sqrt{3}$& 2        \\
+    -           & -             & -         & -         & 2         & $\sqrt{3}$& 1         &  \my      & 1         & $\sqrt{3}$ \\
+    -           & -             & -         & -         & $\sqrt{3}$& 2         & $\sqrt{3}$& 1         & \my       & 1        \\
+    -           & -             & -         & -         & 1         & $\sqrt{3}$& 2         & $\sqrt{3}$& 1         &  \my \\ };
     
     \foreach \i/\x in {0/1, 1/2,2/3,3/4,4/5,5/6, 6/7, 7/8, 8/9, 9/10}{
     \node[headers, anchor=north] at ([yshift=4ex]first-1-\x.north) {\i};
@@ -88,13 +97,14 @@
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % LEGEND
     
-    \node [draw, rectangle, fill=myellow, minimum size=1em, inner sep=0, label={[align=left, text width=170pt]right: $\begin{cases} 0 &\text{ for equal spin matrix} \\ 1 &\text{ for opposite spin matrix}\end{cases}$}] at ($(QD2) + (0, -1.6)$) {};
+    \node [draw, rectangle, fill=myellow, minimum size=1em, inner sep=0, label={[align=left, text width=170pt]right: $\begin{cases} - &\text{ for equal spin matrix} \\ 1 &\text{ for opposite spin matrix}\end{cases}$}] at ($(QD2) + (0, -1.6)$) {};
     
-    \node [draw, rectangle, fill=mgreen, minimum size=1em, inner sep=0, label={[align=left, text width=170pt]right: We assume strong shielding between benzene and quantum dot $\Rightarrow$ no Coulomb interaction}] at ($(QD2) + (0, -3.)$) {0};
+    \node [draw, rectangle, fill=mgreen, minimum size=1em, inner sep=0, label={[align=left, text width=170pt]right: We assume strong shielding between benzene and quantum dot $\Rightarrow$ no Coulomb interaction}] at ($(QD2) + (0, -3.)$) {-};
     
     
     \end{tikzpicture}
-    \caption{Table shows distances between sites, as multiples of the C-C bond length ($d=\SI{1.40}{\angstrom}$) {\color{red} idk maybe add functions on how to generate table... prbly not nescessary though}}
+    \caption{Table shows distances between sites, as multiples of the C-C bond length ($d=\SI{1.40}{\angstrom}$)... values in table are only inputs into ohno function though {\color{red} idk maybe add functions on how to generate table... prbly not nescessary though}, Note: ``-" $= \infty$}
+    \label{fig:coupled_distances}
 \end{figure}
 
 
@@ -139,4 +149,5 @@
     }
     \end{tikzpicture}
     \caption{Table shows distances between sites, as multiples of the C-C bond length ($d=\SI{1.40}{\angstrom}$) {\color{red} idk maybe add functions on how to generate table... prbly not nescessary though}}
+    \label{fig:coupled_hoppings}
 \end{figure}
