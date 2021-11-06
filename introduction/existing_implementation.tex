@@ -28,7 +28,7 @@ with frequency $\omega$, width $\sigma$ and peak time $t_p$. This can be integra
 \begin{equation}
     v_{ij} \to v_{ij}(t) = v_{ij}\exp\left(i\frac{e}{\hbar} \int_{\Vec{R}_i}^{\Vec{R}_j} \Vec{A}(\Vec{r},t) d\Vec{r}\right)\label{eq:hopping}
 \end{equation}
-Here $\Vec{A}$ is the electromagnetic vector potential which, in a gauge where the scalar potential vanishes, can be expressed via $\Vec{E}(t) = -\partial_t \Vec{A}(t)$. {\color{red} not quite sure where I should include constants like $\hbar$ or $e$, when should I say we set these to 1? Also different version of above equation for NNN. Should I even focus on mentioning the differences for NNN vs NN} Using an approximation for the integral in (\ref{eq:hopping}) and the equation (\ref{eq:e_field}) one arrives at
+Here $\Vec{A}$ is the electromagnetic vector potential which, in a gauge where the scalar potential vanishes, can be expressed via $\Vec{E}(t) = -\partial_t \Vec{A}(t)$. Using an approximation for the integral in (\ref{eq:hopping}) and the equation (\ref{eq:e_field}) one arrives at
 \begin{equation}
     v_{ij} \approx v_{ij} \exp\left(ia[\cos(\omega (t-t_p))-b] e^{-\frac{(t-t_p)^2}{2\sigma^2}}\right)
 \end{equation}
@@ -74,33 +74,40 @@ With all these data saving measures in place, it was possible to compute the tim
 
 
 \subsection{Spectral Functions}\label{sec:spectral_functions}
-\begin{itemize}
-    \item what is a spectral function and why is it interesting
-    \item equilibrium vs non-equilibrium spectral functions
-    \item how fft was done, broadening, extension of domain etc.
-    \item measure for occupation of states. All states with energy below $\omega_f = 0$ are occupied (at half filling)
-\end{itemize}
 
-One way of obtaining information about the states of a system is via spectral functions $A(\omega, t)$. They provide insight about which electronic states the system is allowed to be in, regardless whether they are actually occupied or not. Spectral functions can be interpreted as a sort of generalised density of states (DOS).
-
-
-\medskip
-Another way of obtaining information about the states of a system is using spectral functions $A(\omega, t)$. They are functions of energy and provide a measure of which states are occupied.
-(spectrum of one-particle excitations)
-
-The existing code offers two methods of computing spectral functions \cite{spectral_function}
+One way of obtaining information about the states of a system is via spectral functions $A(\omega, t)$. They provide insight about which states the electrons in the system can occupy, and thus also tell us about the energies required for electrons to transitions to occur. The existing code offers two methods of computing spectral functions \cite{spectral_function}
 
 \subsubsection{Lehmann Spectra}
-First implemented by Michael Innerberger
+Implemented by M. Innerberger in \cite{innerberger}, the Lehmann representation of the spectral function gives the equilibrium, i.e. time-independent, spectrum of the system. 
+\begin{equation}
+    A(E)=\sum_{i, \sigma} \sum_{|\phi\rangle}\left(\left|\left\langle\phi\left|\hat{c}_{i \sigma}^{\dagger}\right| \psi_{0}\right\rangle\right|^{2} \delta\left(E-E_{|\phi\rangle}+E_{0}\right)+\left|\left\langle\phi\left|\hat{c}_{i \sigma}\right| \psi_{0}\right\rangle\right|^{2} \delta\left(E+E_{|\phi\rangle}-E_{0}\right)\right)
+\end{equation}
+Where $\{ \ket{\phi}\}$ is an eigenbasis of $\mathcal{H}(N_s)$ with respective energy $E_{\ket{\phi}}$, and $\ket{\psi_0}$ is the ground state of $\hat{H}$ with energy $E_0$.
+
+\bigskip
+It is simple and quick to generate with the existing code and produces numerically elegant results. However, because of it being quite memory intensive, it can not handle systems with large numbers of sites. This together with the fact that we can not investigate the time dependence of the spectrum, prompted the implementation of a way to calculate the non-equilibrium spectral function.
 
 \subsubsection{Fourier Transforms of Non-Equilibrium Green's Functions}
-First implemented by Paul Worm in Bachelor and efficiency improved by Prauhart.
 
-Non-equilibrium spectral function $A_{ij\sigma}^\gtlt(\omega, t)$ is obtained via a forward transform of the Greens function $G_{ij\sigma}^\gtlt (t,t')$
+Originally implemented by P. Worm \cite{worm_bachelor}, with efficiency improvements by P. Prauhart \cite{prauhart}, the one-particle non-equilibrium greens function $G_{ij\sigma} (t,t')$ can be used to compute the non-equilibrium spectral function $A_{ij\sigma}(\omega, t)$, via forward Fourier transformation.
+
 \begin{equation}
-    A_{ij\sigma}^\gtlt = \frac{1}{\pi} \operatorname{Im}\int_0^\infty \operatorname{e}^{i\omega t_{rel}} G_{ij\sigma}^\gtlt (t,t+t_{rel}) dt_{rel}
+    G_{i j \sigma}^{<}\left(t, t^{\prime}\right)=\mathrm{i}\left\langle\psi\left(t^{\prime}\right)\left|\hat{c}_{j \sigma}^{\dagger} \mathcal{T} e^{-\mathrm{i} \int_{t}^{t^{\prime}} H(\tau) \mathrm{d} \tau} \hat{c}_{i \sigma}\right| \psi(t)\right\rangle\label{eq:greens_function_lesser}
 \end{equation}
 
 \begin{equation}
-    G_{i j \sigma}^{\gtlt}\left(t, t^{\prime}\right)=\mathrm{i}\left\langle\psi\left(t^{\prime}\right)\left|\hat{c}_{j \sigma}^{\dagger} \mathcal{T} e^{-\mathrm{i} \int_{t}^{t^{\prime}} H(\tau) \mathrm{d} \tau} \hat{c}_{i \sigma}\right| \psi(t)\right\rangle
+    G_{i j \sigma}^{>}\left(t, t^{\prime}\right)=\mathrm{i}\left\langle\psi\left(t^{\prime}\right)\left|\hat{c}_{j \sigma} \mathcal{T} e^{-\mathrm{i} \int_{t}^{t^{\prime}} H(\tau) \mathrm{d} \tau} \hat{c}_{i \sigma}^\dagger\right| \psi(t)\right\rangle\label{eq:greens_function_greater}
 \end{equation}
+
+\begin{equation}
+    A_{ij\sigma}^\gtlt = \frac{1}{\pi} \operatorname{Im}\int_0^\infty \operatorname{e}^{i\omega t_{rel}} G_{ij\sigma}^\gtlt (t,t+t_{rel}) dt_{rel}\label{eq:non_equilibirum_spectral_function}
+\end{equation}
+
+A simple interpretation of the definition in \ref{eq:greens_function_lesser} is that an electron with spin $\sigma$ is removed from site $i$ of the system at time $t$, the system is time evolved to $t'$ and then the electron is added back in at site $j$. $G_{ij\simga}^{<}$ is then proportional to the probability that this system is in the same state as a system at time $t'$ where the electron was never removed. The exact implementation is elaborated on in \cite{worm_bachelor}. {\color{red} did i accidentally switch $t$ and $t'$ in the verbal explanation?}
+
+\subsubsection{Obtaining spectral functions using the existing code}
+
+In the current state of the code the Lehmann spectrum can be generated automatically and is output as a .dat file containing columns of values of $A(\omega)$ for each site.
+
+\bigskip
+The Green's function is also output as a .dat file with columns containing complex number values of $G(t,t'=t_0)$ for each site. In order to obtain the spectral function from this one needs to perform the Fourier transform of this data manually, using (\ref{eq:non_equilibirum_spectral_function}), as it has not been implemented in the code yet. In order to obtain more usable, less noisy results one should, prior to the Fourier transform, multiply $G$ with a dampening factor $e^{-\epsilon (t-t_0)}$, which effectively acts as a Lorentzian broadening in the frequency space \cite{spectral_function}. To achieve a higher frequency/energy resolution one can additionally zero-pad the domain before performing the Fourier transform. 
