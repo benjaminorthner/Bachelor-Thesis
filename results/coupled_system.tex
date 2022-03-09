@@ -1,5 +1,27 @@
 \section{Coupled System}
 
-\color{blue}
-To test if the constituent parts of the coupled system still works we first set $v_c = 0$ and hope to see the same results as with the isolated systems. (maybe totally unnecessary to mention this. I guess the paper should assume the code works and shouldn't go into detail on the testing)
-\color{black}
+\subsection{Testing}
+Before we investigate the effects of increasing the coupling strength between the two systems, we verify that if the hopping amplitude $v_c = 0$, the spectra on the individual sites remain unchanged. For the coupled system, calculating the Lehmann spectrum is no longer an option as memory becomes a limiting factor, instead we resort to using the Green's function method.
+
+\medskip
+As can be seen when comparing Fig. \ref{fig:coupled_vc_0} with the spectra in Fig. \ref{fig:spectrum_engineering} and Fig. \ref{fig:isolated_benzene}, this is indeed the case. The slight variations being due to a difference in parameters used to perform the Fourier transformation.
+
+\begin{figure}[!hbt]
+    \centering
+    \includegraphics[width=0.49\textwidth]{graph/coupled_QD_vc_0.pdf}
+    \includegraphics[width=0.49\textwidth]{graph/coupled_benzene_vc_0.pdf}sh
+    \caption{Spectral function of all the sites of the coupled system with the coupling parameter turned off, $v_c = 0$. These spectra should be identical to those in Fig. \ref{fig:spectrum_engineering} and Fig. \ref{fig:isolated_benzene}}
+    \label{fig:coupled_vc_0}
+\end{figure}
+
+\subsection{Dependence of the spectrum on the coupling strength}
+
+\begin{figure}[!hbt]
+    \centering
+    \includegraphics[width=0.49\textwidth]{graph/spectrum_vc_sweep/QD_All_020.pdf}
+    \includegraphics[width=0.49\textwidth]{graph/spectrum_vc_sweep/QD_All_030.pdf}
+    \includegraphics[width=0.49\textwidth]{graph/spectrum_vc_sweep/QD_All_070.pdf}
+    \includegraphics[width=0.49\textwidth]{graph/spectrum_vc_sweep/QD_All_100.pdf}
+    \caption{}
+    \label{fig:spectrum_vc_sweep}
+\end{figure}

@@ -7,11 +7,16 @@ Their high efficiency in energy conversion has been shown experimentally, and im
 
 \subsection{Geometry}
  
- In implementing quantum dots, one of two choices had to be made. Either we implement a new type of site, with multiple energy levels, or we model the quantum dot as a particular arrangement of sites, which we engineer to have the desired effective energy levels. The latter option requires less alterations to the existing code and thus is that was chosen. In this implementation the hoppings between sites correspond to energy level transitions.
+ In implementing quantum dots, one of two choices had to be made. Either we implement a new type of site, with multiple energy levels, or we model the quantum dot as a particular arrangement of sites, which we engineer to have the desired effective energy levels. The latter option requires less alterations to the existing code and thus was chosen.
  
  \medskip
  
- For all computations done in this work the QD is modelled as a $2\times 2$ lattice of sites. The hopping amplitudes for horizontal and vertical hoppings were chosen to be $v_h = v_v = 1.0$ and diagonal hoppings $v_d = 0$. Non-local coulomb interactions also calculated with PPP model (see section \ref{subsec:ppp})and distances were calculated by assuming lattice constant was same as $C-C$ bond length ($\SI{1.4}{\angstrom}$). Not physical but we are just looking for proof of concept for now.
+ For all the computations done in this work the QD is modelled as a $2\times 2$ lattice of sites, with the following horizontal, vertical and diagonal hopping amplitudes: $v_h = v_v = 1$, $v_d = 0$. As shown in Fig. \ref{fig:qd_hoppings}, the diagonal hopping between sites 1 and 2 can be omitted since it is perpendicular to the light pulse direction.
+ 
+ \medskip
+ 
+ In order to be consistent with the model used for the Benzene ring, the non-local coulomb interactions for the QD are also calculated using the PPP model as described in section \ref{subsec:ppp}. The distances used in the Ohno function, shown in Fig.
+ \ref{fig:qd_distances}, were calculated by choosing the lattice constant to be equal to the $C-C$ bond length $d =\SI{1.4}{\angstrom}$. This does not necessarily have a physical basis, but for now it provides sufficient flexibility to engineer the desired spectrum by varying the on-site coulomb potential $U$, which is shown in section \ref{subsec:spectrum_engineering}.
  
 \begin{figure}[!hbt]
     \begin{minipage}[b]{.48\textwidth}
@@ -41,8 +46,8 @@ Their high efficiency in energy conversion has been shown experimentally, and im
     
     \end{tikzpicture}
     
-    \caption{Distances used in Ohno function (\ref{eq:ohno_interpolation}) to calculate the coulomb potential $U_{ij}$. Chose $d = \SI{1.4}{\angstrom}$\newline}
-    
+    \caption{Distances used in Ohno function (\ref{eq:ohno_interpolation}) to calculate the coulomb potential $U_{ij}$. With $d = \SI{1.4}{\angstrom}$\newline}
+    \label{fig:qd_distances}
     \end{minipage}
     \hfill
     \begin{minipage}[b]{.48\textwidth}
@@ -74,7 +79,7 @@ Their high efficiency in energy conversion has been shown experimentally, and im
     \draw[hhop] (QD2.east)  --  (QD3.west);
     
     % diagonal hoppings
-    \draw[dhop2] (QD1.south west) to[out=215, in=55]                             (QD2.north east);
+    %\draw[dhop2] (QD1.south west) to[out=215, in=55]                             (QD2.north east);
     \draw[dhop] (QD0.south east) to[out=-35, in=125] node[darrow_label] {$v_d$} (QD3.north west);
     
     

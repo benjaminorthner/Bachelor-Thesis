@@ -16,6 +16,8 @@
 \usepackage{graphicx}
 \usepackage{capt-of}
 \usepackage{tikz}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 \usepackage[font=small,labelfont=bf,labelsep=space]{caption}
 \usepackage[caption=false,font=footnotesize]{subfig}
 
@@ -122,29 +124,30 @@
 \input{results/isolated_benzene}
 \input{results/coupled_system}
 \newpage
- 1. Introduction to this topic
-    - keep it short (1-2pages)
-    - reference Hörbinger + original PPP papers
-    - Innerberger
-    
- 2. Code that I implemented
-    - non-local interaction
-    - potential energy (instead of double occupancy)... double occupancy not a good measure of pot energy anymore
-    - vii (Hubbard term)
 
-3. Results
-    - Greens functions
-    - show QD and Benzene isolated (compare to PPP paper)
-    - show coupled QD and Benzene (with vc = 0 and with vc != 0)
+%  1. Introduction to this topic
+%     - keep it short (1-2pages)
+%     - reference Hörbinger + original PPP papers
+%     - Innerberger
     
-4. Outlook
-    - this was about the setup
-    - next work is about analysing this system (impact ionisation on BzRing or QD)
-    - why no transitions as w=4 (maybe some k point stuff)
+%  2. Code that I implemented
+%     - non-local interaction
+%     - potential energy (instead of double occupancy)... double occupancy not a good measure of pot energy anymore
+%     - vii (Hubbard term)
+
+% 3. Results
+%     - Greens functions
+%     - show QD and Benzene isolated (compare to PPP paper)
+%     - show coupled QD and Benzene (with vc = 0 and with vc != 0)
     
-What the reader should get from the thesis
-1.(How the new implemented code works and how one can use it)
-2.(How does a spectrum of QD to Benzene ring look)
+% 4. Outlook
+%     - this was about the setup
+%     - next work is about analysing this system (impact ionisation on BzRing or QD)
+%     - why no transitions as w=4 (maybe some k point stuff)
+    
+% What the reader should get from the thesis
+% 1.(How the new implemented code works and how one can use it)
+% 2.(How does a spectrum of QD to Benzene ring look)
 
 \newpage
 \chapter*{Parameters for figures}
@@ -156,6 +159,6 @@ What the reader should get from the thesis
 \bibliographystyle{unsrt} % https://www.overleaf.com/learn/latex/Bibtex_bibliography_styles
 \bibliography{other/bibliography.bib} 
 
-\newpage
-\input{other/tikzpractice}
+%\newpage
+%\input{other/tikzpractice}
 \end{document}

@@ -75,7 +75,7 @@ With all these data saving measures in place, it was possible to compute the tim
 
 \subsection{Spectral Functions}\label{sec:spectral_functions}
 
-One way of obtaining information about the states of a system is via spectral functions $A(\omega, t)$. They provide insight about which states the electrons in the system can occupy, and thus also tell us about the energies required for electrons to transitions to occur. The existing code offers two methods of computing spectral functions \cite{spectral_function}
+One way of obtaining information about the states of a system is via spectral functions $A(\omega, t)$. They provide insight about which states the electrons in the system can occupy, and thus also tell us about the energies required for electrons to transitions to occur. The existing codebase offers two methods of computing spectral functions \cite{spectral_function}
 
 \subsubsection{Lehmann Spectra}
 Implemented by M. Innerberger in \cite{innerberger}, the Lehmann representation of the spectral function gives the equilibrium, i.e. time-independent, spectrum of the system. 
@@ -103,11 +103,11 @@ Originally implemented by P. Worm \cite{worm_bachelor}, with efficiency improvem
     A_{ij\sigma}^\gtlt = \frac{1}{\pi} \operatorname{Im}\int_0^\infty \operatorname{e}^{i\omega t_{rel}} G_{ij\sigma}^\gtlt (t,t+t_{rel}) dt_{rel}\label{eq:non_equilibirum_spectral_function}
 \end{equation}
 
-A simple interpretation of the definition in \ref{eq:greens_function_lesser} is that an electron with spin $\sigma$ is removed from site $i$ of the system at time $t$, the system is time evolved to $t'$ and then the electron is added back in at site $j$. $G_{ij\simga}^{<}$ is then proportional to the probability that this system is in the same state as a system at time $t'$ where the electron was never removed. The exact implementation is elaborated on in \cite{worm_bachelor}. {\color{red} did i accidentally switch $t$ and $t'$ in the verbal explanation?}
+A simple interpretation of the definition in \ref{eq:greens_function_lesser} is that an electron with spin $\sigma$ is removed from site $i$ of the system at time $t$, the system is time evolved to $t'$ and then the electron is added back in at site $j$. $G_{ij\sigma}^{<}$ is then proportional to the probability that this system is in the same state as a system at time $t'$ where the electron was never removed. The exact implementation is elaborated on in \cite{worm_bachelor}. {\color{red} did i accidentally switch $t$ and $t'$ in the verbal explanation?}
 
 \subsubsection{Obtaining spectral functions using the existing code}
 
 In the current state of the code the Lehmann spectrum can be generated automatically and is output as a .dat file containing columns of values of $A(\omega)$ for each site.
 
 \bigskip
-The Green's function is also output as a .dat file with columns containing complex number values of $G(t,t'=t_0)$ for each site. In order to obtain the spectral function from this one needs to perform the Fourier transform of this data manually, using (\ref{eq:non_equilibirum_spectral_function}), as it has not been implemented in the code yet. In order to obtain more usable, less noisy results one should, prior to the Fourier transform, multiply $G$ with a dampening factor $e^{-\epsilon (t-t_0)}$, which effectively acts as a Lorentzian broadening in the frequency space \cite{spectral_function}. To achieve a higher frequency/energy resolution one can additionally zero-pad the domain before performing the Fourier transform. 
+The Green's function is also output as a .dat file with columns containing complex number values of $G(t,t'=t_0)$ for each site. In order to obtain the spectral function from this, one needs to perform the Fourier transform of this data manually, using (\ref{eq:non_equilibirum_spectral_function}), as there is currently no existing function in the codebase that handles this. In order to obtain more usable, less noisy results one should, prior to the Fourier transform, multiply $G$ with a dampening factor $e^{-\epsilon (t-t_0)}$, which effectively acts as a Lorentzian broadening in frequency space \cite{spectral_function}. To achieve a higher frequency/energy resolution one can additionally zero-pad the domain before performing the Fourier transform. 

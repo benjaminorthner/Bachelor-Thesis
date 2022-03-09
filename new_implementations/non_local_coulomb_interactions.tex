@@ -68,7 +68,7 @@ In the preceding works \cite{innerberger,worm_bachelor,worm_project,prauhart}, i
 However the use of this observable was only valid because it happened to be proportional to the potential energy term in the system's Hamiltonian (\ref{eq:local_ham_nonsym}). The true measure for impact ionisation is in fact the rate of conversion of the system's kinetic energy to it's potential energy, for a constant total energy.
 
 \medskip
-In a sense this is the very definition of impact ionisation. In ordinary systems any excess kinetic energy is lost to phonon excitations. Converting this kinetic energy into potential energy, by for example lifting another electron to a higher energy level, is what we call impact ionisation.
+In a sense this is the very definition of impact ionisation. In ordinary systems any excess kinetic energy is lost to phonon excitations. Converting this kinetic energy into potential energy, for example by lifting another electron to a higher energy level, is what we call impact ionisation.
 \medskip
 
 In transitioning to a Hamiltonian with non-local coulomb interactions (\ref{eq:ham_nonsym}) the proportionality between double occupation and potential energy is lost. Thus a new function was implemented that calculates the site-averaged expectation value of the potential energy at every time-step. In the code this is also referred to as the ``interaction energy''
@@ -76,3 +76,27 @@ In transitioning to a Hamiltonian with non-local coulomb interactions (\ref{eq:h
     \left\langle{\hat{E}_{\text{pot}}(t)}\right\rangle = \frac{1}{N_s} \sum_{ij\sigma\sigma'} \left\langle{U_{ij\sigma\sigma'}\hat{n}_{i \sigma}(t) \hat{n}_{j\sigma'}(t)}\right\rangle
 \end{equation}
 Since $\hat{E}_{\text{pot}}$ commutes with the Hamiltonian, the occupation number basis states are also eigenstates of $\hat{E}_{\text{pot}}$. Thus $\left\langle{\hat{E}_{\text{pot}}(t)}\right\rangle$ can be calculated by taking the trace of the Hamiltonian. The on-site hopping term $v_{ii}$ will also be included in the trace, however it only contributes a constant shift (that we interpret as a chemical potential), and thus has no effect on impact ionisation which depends on the rate of change of the potential energy.
+
+\color{red}
+potentially include some sort of pseudocode for how the interaction energy is calcualted. Would include that at every time step we first extract the sparse hamiltonians diagonal (could also be shown in pseudocode), and then calculate the trace of the ground state vector with just the diagonal in a non spares vector vector multiplication. (mention that this leads to problem that we can not distinguish between QD and Benzene in result?)
+\color{black}
+
+\begin{algorithm}
+\caption{An algorithm with caption}\label{alg:cap}
+\hspace*{\algorithmicindent} \textbf{Input:} $H$ \\
+\hspace*{\algorithmicindent} \textbf{Output:} $H_{\textbf{diagonal}}$
+\begin{algorithmic}[1]
+\For{$r = 0$ \textbf{to} $H.\textbf{dim}$} \Comment{Loop through rows in Hamiltonian}
+    \State
+    \State
+\EndFor
+\If{$N$ is even}
+    \State $X \gets X \times X$
+    \State $N \gets \frac{N}{2}$  \Comment{This is a comment}
+\ElsIf{$N$ is odd}
+    \State $y \gets y \times X$
+    \State $N \gets N - 1$
+\EndIf
+\EndWhile
+\end{algorithmic}
+\end{algorithm}

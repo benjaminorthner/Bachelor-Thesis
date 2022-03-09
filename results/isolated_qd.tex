@@ -1,9 +1,9 @@
 \section{Isolated Quantum Dot}
-\subsection{Engineering the spectrum}
+\subsection{Engineering the spectrum}\label{subsec:spectrum_engineering}
 
 To encourage impact ionisation, we engineer the quantum dot to have 4 equally spaced energy levels. As shown in Fig. \ref{fig:qd_spectrum_delta} (and Fig \ref{fig:impact_ionisation}) this allows for an electron from the lower Hubbard band to be excited into the most energetic state and during its subsequent decay, to promote a second electron over the Mott gap.
 \newline
-{\color{red} do the lines represent states of electrons or states of the entire system?}
+%{\color{red} do the lines represent states of electrons or states of the entire system?}
 
 \begin{figure}[!hbt]
     \centering
@@ -81,14 +81,14 @@ In Fig. \ref{fig:qd_9_total_energy} we see the Total energy of the spectrum engi
 
 \medskip
 
-Rather unexpecteldy however, we see no energy gain at $\omega = 4.00$, meaning that for some reason the first transition shown in Fig. \ref{fig:qd_spectrum_delta} is not occuring.
+Rather unexpectedly however, we see no energy gain at $\omega = 4.00$, meaning the first transition shown in Fig. \ref{fig:qd_spectrum_delta} seems to not be taking place.
 
 \medskip
 
-One possible explanation for this may be that the spectral functions we are using are not truly representative of the transitions between eigenenergies of our system. As briefly explained in section \ref{sec:spectral_functions}, we compute spectral functions by adding an electron/hole to the system, letting it propagate for a fixed time, then removing it again, and evaluating the overlap of this system with an unmodified one. Thus the spectral function shows us transitions between systems with electron numbers differing by one. For large systems, with many electrons, adding or removing a single electron has an insignificant effect on its eigenenergy spectrum and thus it will be equal to the spectral function. However, for a small 2x2 site system like our QD, the effect may no longer be negligible. Meaning that the spectrum we see in Fig. \ref{fig:spectrum_engineering} may not accurately represent the true eigenenergies of the QD and the transition at $\omega\approx 4$ may not be possible.
+One possible explanation for this may be that the spectral functions we are using are not truly representative of the transitions between the eigenstates of our system. As briefly explained in section \ref{sec:spectral_functions}, we compute spectral functions by adding an electron/hole to the system, letting it propagate for a fixed time, then removing it again, and evaluating the overlap of this system with an unmodified one. Thus the spectral function shows us transitions between systems with electron numbers differing by one. For large systems, with many electrons, adding or removing a single electron has an insignificant effect on its eigenenergy spectrum and thus it will be equal to the spectral function. However, for a small 2x2 site system like our QD, the effect may no longer be negligible. Meaning that the spectrum we see in Fig. \ref{fig:spectrum_engineering} may not accurately represent the true eigenenergies of the QD and the transition at $\omega\approx 4$ may not be possible.
 
 \medskip
-It may be possible to remedy this with the use of Loschmid spectra, which do not suffer from the same issues in small systems{\color{red} I should probably cite something here right? About Loschmid spectra}). However the implementation of these will have to wait for a future project.
+It may be possible to remedy this with the use of Loschmid spectra, which do not suffer from the same issues in small systems. However the implementation of these will have to wait for a future project. ({\color{red} I should probably cite something here right? About Loschmid spectra})
 
 \medskip
 {\color{green}... is it even possible for us to ever see impact ionisation if the $\omega \approx 4$ transition cannot happen? Should I explain that because of this we do not expect to see impact ionisation for now?} 
@@ -96,6 +96,6 @@ It may be possible to remedy this with the use of Loschmid spectra, which do not
 \begin{figure}[!hbt]
     \centering
     \includegraphics[width=0.7\textwidth]{graph/9test.pdf}
-    \caption{Caption}
+    \caption{Total energy in isolated QD system after interaction with light pulse at $t=6$ for various frequencies $\omega$.}
     \label{fig:qd_9_total_energy}
 \end{figure}
