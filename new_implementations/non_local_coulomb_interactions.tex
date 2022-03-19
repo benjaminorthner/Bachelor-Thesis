@@ -16,23 +16,24 @@ In the existing implementation the on-site repulsive coulomb force is accounted 
     \sum_{i j \sigma} v_{j i} \hat{c}_{i \sigma}^{\dagger} \hat{c}_{j \sigma}%
     \label{eq:ham_nonsym}
 \end{equation}
-Because only the mutual orientation of the spins $\sigma$ and $\sigma'$ can have a physical effects, we can split $U_{ij\sigma\sigma'}$ into two $N_s\times N_s$ matrices $U_{ij}^{\text{same-spin}}$ and $U_{ij}^{\text{opp-spin}}$. These must be generated for each system geometry and then be passed as parameters to the Hamiltonian assembly routine. For all results shown in this thesis $U^{\text{same-spin}}$ and $U^{\text{opp-spin}}$ have been chosen to be identical in their off-diagonal elements. Due to the Pauli exclusion principle the diagonal elements of $U^{\text{same-spin}}$ must be set to $0$, as two electrons with equal spins can not occupy the same site.
+Because only the mutual orientation of the spins $\sigma$ and $\sigma'$ can have physical effects, we can split $U_{ij\sigma\sigma'}$ into two $N_s\times N_s$ matrices $U_{ij}^{\text{same-spin}}$ and $U_{ij}^{\text{opp-spin}}$. These must be generated for each system geometry and then be passed as parameters to the Hamiltonian assembly routine. For all results shown in this thesis $U^{\text{same-spin}}$ and $U^{\text{opp-spin}}$ have been chosen to be identical in their off-diagonal elements. Due to the Pauli exclusion principle the diagonal elements of $U^{\text{same-spin}}$ must be set to $0$, as two electrons with equal spins can not occupy the same site. An example of these matrices can be seen in Fig. \ref{fig:coupled_distances}
 
 
-\subsection{Electron-Hole Symmetry and Chemical Potential}
+\subsection{Electron-Hole Symmetry and Chemical Potential} \label{sec:electron_hole_symmetry}
 \subsubsection{Local U}
-In the current form, this Hamiltonian changes differently upon addition of an electron compared to an addition of a hole. However, it will later prove to be rather useful to have the Hamiltonian be electron-hole symmetric, and ideally take the following form
+In the form (\ref{eq:local_ham_sym}), the Hamiltonian changes differently upon addition of an electron compared to an addition of a hole. However, it will later prove to be rather useful to have the Hamiltonian be electron-hole symmetric, and ideally take the following form
 \begin{equation}
     \hat{H} = U \sum_i \left(\hat{n}_{i\uparrow}-\frac{1}{2}\right)\left(\hat{n}_{i\downarrow}-\frac{1}{2}\right)+\sum_{i j \sigma} v_{j i} \hat{c}_{i \sigma}^{\dagger} \hat{c}_{j \sigma}\label{eq:local_ham_sym}
 \end{equation}
-The numerical implementation of (\ref{eq:local_ham_sym}) is however less practical. We can however achieve electron-hole symmetry while still using (\ref{eq:local_ham_nonsym}) by setting the value for the chemical potential to $v_{ii} = -U / 2$.
+Unfortunately the numerical implementation of (\ref{eq:local_ham_nonsym}) is less practical. However, we can alternatively achieve electron-hole symmetry while still using (\ref{eq:local_ham_nonsym}) by setting the value of the chemical potential to $v_{ii} = -U / 2$.
 \medskip
 
 \subsubsection{Non-Local U}
-Electron hole symmetry is again achieved via a choice of chemical potential (hartree term?). Sum over any row of both U matrices ({\color{red}different for qd and benzene})
+The same thing can be achieved for the Hamiltonian with Non-Local Coulomb interactions (\ref{eq:ham_nonsym}) by again making a particular choice of chemical potential / on-site hopping term. 
 \begin{equation}
-    v_{ii} = - \frac{1}{2}\sum_{j} U_{0j}^{\text{opp-spin}} + U_{0j}^{\text{same-spin}}
+    v_{ii} = - \frac{1}{2}\sum_{j}\left( U_{ij}^{\text{opp-spin}} + U_{ij}^{\text{same-spin}}\right)
 \end{equation}
+One can think of this sum as a sum over all the U-matrix elements in the row corresponding to the site $i$. 
 
 
 \subsubsection{Pariser-Parr-Pople Model}\label{subsec:ppp}
@@ -68,35 +69,33 @@ In the preceding works \cite{innerberger,worm_bachelor,worm_project,prauhart}, i
 However the use of this observable was only valid because it happened to be proportional to the potential energy term in the system's Hamiltonian (\ref{eq:local_ham_nonsym}). The true measure for impact ionisation is in fact the rate of conversion of the system's kinetic energy to it's potential energy, for a constant total energy.
 
 \medskip
-In a sense this is the very definition of impact ionisation. In ordinary systems any excess kinetic energy is lost to phonon excitations. Converting this kinetic energy into potential energy, for example by lifting another electron to a higher energy level, is what we call impact ionisation.
+In a sense this is the very definition of impact ionisation. In ordinary systems any excess kinetic energy is lost to phonon excitations. Converting this kinetic energy into potential energy, for example by promoting another electron to a higher energy level, is what we call impact ionisation.
 \medskip
 
 In transitioning to a Hamiltonian with non-local coulomb interactions (\ref{eq:ham_nonsym}) the proportionality between double occupation and potential energy is lost. Thus a new function was implemented that calculates the site-averaged expectation value of the potential energy at every time-step. In the code this is also referred to as the ``interaction energy''
 \begin{equation}
     \left\langle{\hat{E}_{\text{pot}}(t)}\right\rangle = \frac{1}{N_s} \sum_{ij\sigma\sigma'} \left\langle{U_{ij\sigma\sigma'}\hat{n}_{i \sigma}(t) \hat{n}_{j\sigma'}(t)}\right\rangle
 \end{equation}
-Since $\hat{E}_{\text{pot}}$ commutes with the Hamiltonian, the occupation number basis states are also eigenstates of $\hat{E}_{\text{pot}}$. Thus $\left\langle{\hat{E}_{\text{pot}}(t)}\right\rangle$ can be calculated by taking the trace of the Hamiltonian. The on-site hopping term $v_{ii}$ will also be included in the trace, however it only contributes a constant shift (that we interpret as a chemical potential), and thus has no effect on impact ionisation which depends on the rate of change of the potential energy.
-
 \color{red}
-potentially include some sort of pseudocode for how the interaction energy is calcualted. Would include that at every time step we first extract the sparse hamiltonians diagonal (could also be shown in pseudocode), and then calculate the trace of the ground state vector with just the diagonal in a non spares vector vector multiplication. (mention that this leads to problem that we can not distinguish between QD and Benzene in result?)
+Since $\hat{E}_{\text{pot}}$ commutes with the Hamiltonian, the occupation number basis states are also eigenstates of $\hat{E}_{\text{pot}}$. Thus $\left\langle{\hat{E}_{\text{pot}}(t)}\right\rangle$ can be calculated by taking the trace of the Hamiltonian. The on-site hopping term $v_{ii}$ will also be included in the trace, however it only contributes a constant shift (that we interpret as a chemical potential), and thus has no effect on impact ionisation which depends on the rate of change of the potential energy.
 \color{black}
 
-\begin{algorithm}
-\caption{An algorithm with caption}\label{alg:cap}
-\hspace*{\algorithmicindent} \textbf{Input:} $H$ \\
-\hspace*{\algorithmicindent} \textbf{Output:} $H_{\textbf{diagonal}}$
-\begin{algorithmic}[1]
-\For{$r = 0$ \textbf{to} $H.\textbf{dim}$} \Comment{Loop through rows in Hamiltonian}
-    \State
-    \State
-\EndFor
-\If{$N$ is even}
-    \State $X \gets X \times X$
-    \State $N \gets \frac{N}{2}$  \Comment{This is a comment}
-\ElsIf{$N$ is odd}
-    \State $y \gets y \times X$
-    \State $N \gets N - 1$
-\EndIf
-\EndWhile
-\end{algorithmic}
-\end{algorithm}
+% \begin{algorithm}
+% \caption{An algorithm with caption}\label{alg:cap}
+% \hspace*{\algorithmicindent} \textbf{Input:} $H$ \\
+% \hspace*{\algorithmicindent} \textbf{Output:} $H_{\textbf{diagonal}}$
+% \begin{algorithmic}[1]
+% \For{$r = 0$ \textbf{to} $H.\textbf{dim}$} \Comment{Loop through rows in Hamiltonian}
+%     \State
+%     \State
+% \EndFor
+% \If{$N$ is even}
+%     \State $X \gets X \times X$
+%     \State $N \gets \frac{N}{2}$  \Comment{This is a comment}
+% \ElsIf{$N$ is odd}
+%     \State $y \gets y \times X$
+%     \State $N \gets N - 1$
+% \EndIf
+% \EndWhile
+% \end{algorithmic}
+% \end{algorithm}

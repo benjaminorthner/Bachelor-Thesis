@@ -41,8 +41,8 @@ The energy of the non-local coulomb interactions $U_{ij}$ are calculated using t
 \end{figure}
 
 \subsection{Hopping amplitudes}
-One problem with modelling the benzene ring as a chain is that we lose the orientation of the lines connecting two sites relative to the light pulse direction.
-This leads to an inaccuracy in the angle dependent time dependence of the hoppings between the sites. However, by comparing the results with those of another group, where the orientation was taken into account, we saw only negligible differences in the results and thus choose to move forward with this model.
+One problem with modelling the benzene ring as a chain is that we lose the orientations of the bonds connecting neighbouring sites relative to the light pulse direction.
+This leads to an inaccuracy in the angle dependent time dependence of the hoppings between the sites, as illustrated in Fig. \ref{fig:benzene_angles}. However, by comparing the results with those of another group, where the orientation was taken into account, we saw only negligible differences in the results and thus choose to move forward with this model.
 %\medskip
 %lexicographical indexing no longer produces proper hopping signs... but as mentioned we ignore that for now
     %%%%%%%%%%%%%%%%%
@@ -106,5 +106,6 @@ This leads to an inaccuracy in the angle dependent time dependence of the hoppin
     \draw[doublearrow] (Bc3) -- (Bu0) node[pos=0.5,sloped,rotate=150]{\color{red}\Huge$|$}node[pos=0.5,rotate=40]{\color{red}\Huge$|$};
     \draw[doublearrow] (Bc3) -- (B0);
     \end{tikzpicture}
-    \caption{Caption}
+    \caption{Discrepancy in light pulse orientations relative to sites when modelling benzene as a 1D chain with periodic boundary conditions}
+    \label{fig:benzene_angles}
 \end{figure}

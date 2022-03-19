@@ -15,6 +15,9 @@ As can be seen when comparing Fig. \ref{fig:coupled_vc_0} with the spectra in Fi
 \end{figure}
 
 \subsection{Dependence of the spectrum on the coupling strength}
+\color{red}
+No text yet, just some graphs showing what my results are roughly looking like. For final graphs I could choose more fitting parameters
+\color{black}
 
 \begin{figure}[!hbt]
     \centering
@@ -22,6 +25,17 @@ As can be seen when comparing Fig. \ref{fig:coupled_vc_0} with the spectra in Fi
     \includegraphics[width=0.49\textwidth]{graph/spectrum_vc_sweep/QD_All_030.pdf}
     \includegraphics[width=0.49\textwidth]{graph/spectrum_vc_sweep/QD_All_070.pdf}
     \includegraphics[width=0.49\textwidth]{graph/spectrum_vc_sweep/QD_All_100.pdf}
-    \caption{}
+    \caption{Illustrations of how the spectral function of the QD changes with increasinlgy stronger coupling $v_c$ to the Benzene ring {\color{red} Can also make the same graphs for Benzene sites}}
     \label{fig:spectrum_vc_sweep}
+\end{figure}
+
+
+\begin{figure}[!hbt]
+    \centering
+    \includegraphics[width=0.49\textwidth]{graph/potential_energy/Epot_w2_vc0.pdf}
+    \includegraphics[width=0.49\textwidth]{graph/potential_energy/Epot_w4_vc0.pdf}
+    \includegraphics[width=0.49\textwidth]{graph/potential_energy/Epot_w2_vc1.pdf}
+    \includegraphics[width=0.49\textwidth]{graph/potential_energy/Epot_w4_vc1.pdf}
+    \caption{Potential Energy of coupled system after excitation with light pulse. Shown with and without coupling of QD to benzene. {\color{red} Graphs here are not final. Just to show what graphs I can produce. Parameters chosen should proably be adjusted. Bottom right is interesting though. Even though light only hits QD, allowing hoppings to benzene causes the potentail energy to remain high after the pulse vanishes. Not the case for QD only. Would be useful to see Potential energy for each site, but not possible with current implementation in the code}}
+    \label{fig:potential_energy}
 \end{figure}

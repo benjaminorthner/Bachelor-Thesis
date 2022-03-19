@@ -88,10 +88,9 @@ Rather unexpectedly however, we see no energy gain at $\omega = 4.00$, meaning t
 One possible explanation for this may be that the spectral functions we are using are not truly representative of the transitions between the eigenstates of our system. As briefly explained in section \ref{sec:spectral_functions}, we compute spectral functions by adding an electron/hole to the system, letting it propagate for a fixed time, then removing it again, and evaluating the overlap of this system with an unmodified one. Thus the spectral function shows us transitions between systems with electron numbers differing by one. For large systems, with many electrons, adding or removing a single electron has an insignificant effect on its eigenenergy spectrum and thus it will be equal to the spectral function. However, for a small 2x2 site system like our QD, the effect may no longer be negligible. Meaning that the spectrum we see in Fig. \ref{fig:spectrum_engineering} may not accurately represent the true eigenenergies of the QD and the transition at $\omega\approx 4$ may not be possible.
 
 \medskip
-It may be possible to remedy this with the use of Loschmid spectra, which do not suffer from the same issues in small systems. However the implementation of these will have to wait for a future project. ({\color{red} I should probably cite something here right? About Loschmid spectra})
+It may be possible to remedy this with the use of Loschmid spectra, which do not suffer from the same issues in small systems ({\color{red} I should probably cite something here about Loschmid spectra. What about this: \cite{loschmidt}?}). However the implementation of these will have to wait for a future project. 
 
 \medskip
-{\color{green}... is it even possible for us to ever see impact ionisation if the $\omega \approx 4$ transition cannot happen? Should I explain that because of this we do not expect to see impact ionisation for now?} 
 
 \begin{figure}[!hbt]
     \centering

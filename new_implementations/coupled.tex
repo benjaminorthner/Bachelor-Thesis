@@ -1,20 +1,11 @@
 \section{Coupling QD-Benzene}
-\color{blue}
-    The coupled QD-Benzene system is a combination of the above two systems with an extra hopping from all QD sites to a single Benzene site. Again the coulomb interactions are calculated via the Ohno interpolation and stored in the $U$ matrices. The distances used in the calculations for the $U$-matrix elements are shown in Fig. \ref{fig:coupled_distances}. The hopping amplitudes are the same as in the isolated systems with the addition of a parameter $v_c$, representing the hopping between the QD and the benzene ring. By setting $v_c = 0$ we would expect to see the same spectra as with the Isolated systems.{\color{red} at least for the QD, but for benzene idk because benzene not hit by laser pulse in this case... or is that irrelevant for the spectrum?}  Important to note: The on-site hoppings must be calculated individually for the Benzene and the QD sites. The hopping matrix is shown in Fig. \ref{fig:coupled_hoppings}
+    The coupled QD-Benzene system is a combination of the above two systems with an extra hopping from all QD sites to a single Benzene site. Again the coulomb interactions are calculated via the Ohno interpolation and stored in the $U$ matrices. The distances used in the calculations for the $U$-matrix elements are shown in Fig. \ref{fig:coupled_distances}. The hopping amplitudes are the same as in the isolated systems with the addition of a parameter $v_c$, representing the hopping between the QD and the benzene ring. By setting $v_c = 0$ we would expect to see the same spectra as with the Isolated systems. It is important to note that as was alluded to in \ref{sec:electron_hole_symmetry} the on-site hopping term (chemical potential) $v_{ii}$ differs for Benzene and for QD sites and must thus be calculated separately. The hopping matrix is shown in Fig. \ref{fig:coupled_hoppings}
     \medskip
     
     For now we only investigate how the system responds to the light pulse only interacting with the QD sites. Thus we set all the benzene hoppings and the hoppings between the QD and benzene to be non-time dependent.
-\color{black}
 
 \begin{itemize}
-    \item decided that investigate pulse only hitting quantum dot
-    \item U matrices for couples systems
-    \item equal and opposite spin matrices
-    \item full coupling vs half coupling
     \item {\color{red} why would we expect to see impact ionisation in such a coupled system? previous papers?}
-    \item separate $v_ii$ values for QD and Benzene
-    \item why lehmann spectrum can not be computed and we need green
-    \item hopping between QD and benzene NOT TIME DEPENDENT (pulse only on QD)
 \end{itemize}
 
 \usetikzlibrary{matrix, positioning}
@@ -103,7 +94,7 @@
     
     
     \end{tikzpicture}
-    \caption{Table shows distances between sites, as multiples of the C-C bond length ($d=\SI{1.40}{\angstrom}$)... values in table are only inputs into ohno function though {\color{red} idk maybe add functions on how to generate table... prbly not nescessary though}, Note: ``-" $= \infty$}
+    \caption{Table showing the structure of the coulomb interaction matrices $U_{ij\sigma\sigma'}$. Each entry represents the distance between two sites as a multiple of the C-C bond length $d=\SI{1.40}{\angstrom}$. The $U_{ij}$ matrices can be constructed by applying the Ohno function \ref{eq:ohno_interpolation} to each entry in the table. Note that a dash implies an infinite distance (- $= \infty$).}
     \label{fig:coupled_distances}
 \end{figure}
 
