@@ -15,7 +15,7 @@ Using the second quantisation formalism of quantum mechanics, states of such man
 The first corresponding to the repulsive Coulomb interaction $U$ between two electrons with opposite spins located on the same site. The second represents the energy change in the system when an electron hops form site $j\to i$ with hopping amplitude $v_{ji}$. Here $\hat{c}_{i\sigma}^\dagger, \hat{c}_{j\sigma}$ are the fermionic creation and annihilation operators.
 \medskip
 
-One can interpret the first sum as representing the potential (or interaction) energy in the system where the second sum for the hoppings represents the systems kinetic energy, since it is related to movement of electrons. This distinction becomes important in section \ref{sec:non_local_coulomb} where we introduce non-local coulomb interactions.
+One can interpret the first sum as representing the interaction energy (also sometimes referred to as a potential energy) in the system where the second sum for the hoppings represents the systems kinetic energy, since it is related to the movement of electrons. This distinction becomes important in section \ref{sec:non_local_coulomb} where we introduce non-local Coulomb interactions.
 
 
 
@@ -41,22 +41,22 @@ Our main interest is to investigate impact ionisation in the system, after being
 \begin{equation}
     i\hbar \frac{\partial}{\partial t}\ket{\psi(t)} = \hat{H}(t)\ket{\psi(t)}\label{eq:time_evolve}
 \end{equation}
-one finds that the time evolution can be computed by
+the time evolution can be computed as
 \begin{equation}
     \ket{\psi (t)} = \mathcal{T} \exp\left(-\frac{i}{\hbar}\int_0^t H(t') dt'\right) \ket{\psi_0}
 \end{equation}
-where $\mathcal{T}$ is the time-ordering operator. By numerically deviding $t$ into $m$ small time steps $\tau$ it is justified to use Magnus-expansion \cite{magnus} of order zero and thus neglect the time-ordering operator. Assuming the time steps are small enough we can approximate the integral in (\ref{eq:time_evolve}) over one time step using the midpoint rule. This leads to the following recursive formula
+where $\mathcal{T}$ is the time-ordering operator. By numerically deviding $t$ into $m$ small time steps $\tau$, it is justified to use Magnus-expansion \cite{magnus} of order zero and thus neglect the time-ordering operator. Assuming the time steps are small enough we can approximate the integral in (\ref{eq:time_evolve}) over one time step using the midpoint rule. This leads to the following recursive formula
 \begin{equation}
-    \ket{\psi(m\tau + \tau)} = \exp\left(-\frac{i}{\hbar} H\left(m\tau + \frac{\tau}{2}\right)\right)\ket{\psi(m\tau)}
+    \ket{\psi(m\tau + \tau)} = \exp\left(-\frac{i}{\hbar} H\left(m\tau + \frac{\tau}{2}\right)\right)\ket{\psi(m\tau)}.
 \end{equation}
-Which can be computed using the Krylov matrix exponential method \cite{innerberger}.
+This can be computed using the Krylov matrix exponential method \cite{innerberger}.
 
 
 \subsection{Finding the Initial State}
-For impact ionisation we mainly concern ourselves with half-filled systems, where the number of spin-up and spin-down electrons are the same. This is an invariant property of the systems and does not change over time.
+For impact ionisation we mainly concern ourselves with half-filled systems, where the number of spin-up and spin-down electrons are the same. The number of electrons is a conserved property of the systems and does not change over time.
 \medskip
 
-It is assumed that before the electric field pulse, the system is in thermal equilibrium and occupies the state with the lowest energy (the ground state). To find this state numerically a variant of the power iteration method was implemented \cite{innerberger}. From a randomly initialised starting state, it iterativley computes the eigenenergy with the largest absolute value and its corresponding eigenstate, thus recursively converging on to the ground state.
+It is assumed that before the electric field pulse, the system is in thermal equilibrium and occupies the state with the lowest energy (the ground state). To find this state numerically, a variant of the power iteration method was implemented \cite{innerberger}. From a randomly initialised starting state, it iterativley computes the eigenenergy with the largest absolute value and its corresponding eigenstate, thus recursively converging to the ground state.
 
 
 \subsection{Memory Management}
@@ -75,7 +75,7 @@ With all these data saving measures in place, it was possible to compute the tim
 
 \subsection{Spectral Functions}\label{sec:spectral_functions}
 
-One way of obtaining information about the states of a system is via spectral functions $A(\omega, t)$. They provide insight about which states the electrons in the system can occupy, and thus also tell us about the energies required for electrons to transitions to occur. The existing codebase offers two methods of computing spectral functions \cite{spectral_function}
+One way of obtaining information about the states of a system is via spectral functions $A(\omega, t)$. They provide insight into which states and energies the electrons in the system can occupy, and thus also tell us about the energies required for optical electron transitions to occur. The existing codebase offers two methods of computing spectral functions \cite{spectral_function}:
 
 \subsubsection{Lehmann Spectra}
 Implemented by M. Innerberger in \cite{innerberger}, the Lehmann representation of the spectral function gives the equilibrium, i.e. time-independent, spectrum of the system. 
@@ -85,7 +85,7 @@ Implemented by M. Innerberger in \cite{innerberger}, the Lehmann representation 
 Where $\{ \ket{\phi}\}$ is an eigenbasis of $\mathcal{H}(N_s)$ with respective energy $E_{\ket{\phi}}$, and $\ket{\psi_0}$ is the ground state of $\hat{H}$ with energy $E_0$.
 
 \bigskip
-It is simple and quick to generate with the existing code and produces numerically elegant results. However, because of it being quite memory intensive, it can not handle systems with large numbers of sites. This together with the fact that we can not investigate the time dependence of the spectrum, prompted the implementation of a way to calculate the non-equilibrium spectral function.
+It is simple and quick to generate with the existing code and produces numerically elegant results. However, because of it being quite memory intensive, it can not handle systems with a large number of sites. This together with the fact that we can not investigate the time dependence of the spectrum, prompted the implementation of another way to calculate the non-equilibrium spectral function.
 
 \subsubsection{Fourier Transforms of Non-Equilibrium Green's Functions}
 
@@ -103,11 +103,11 @@ Originally implemented by P. Worm \cite{worm_bachelor}, with efficiency improvem
     A_{ij\sigma}^\gtlt = \frac{1}{\pi} \operatorname{Im}\int_0^\infty \operatorname{e}^{i\omega t_{rel}} G_{ij\sigma}^\gtlt (t,t+t_{rel}) dt_{rel}\label{eq:non_equilibirum_spectral_function}
 \end{equation}
 
-A simple interpretation of the definition in \ref{eq:greens_function_lesser} is that an electron with spin $\sigma$ is removed from site $i$ of the system at time $t$, the system is time evolved to $t'$ and then the electron is added back in at site $j$. $G_{ij\sigma}^{<}$ is then proportional to the probability that this system is in the same state as a system at time $t'$ where the electron was never removed. The exact implementation is elaborated on in \cite{worm_bachelor}. 
+A simple interpretation of the definition in (\ref{eq:greens_function_lesser}) is that an electron with spin $\sigma$ is removed from site $i$ of the system at time $t$, the system is time evolved to $t'$ and then the electron is added back at site $j$. $G_{ij\sigma}^{<}$ is then proportional to the probability that this system is in the same state as a system at time $t'$ where the electron was never removed. The exact implementation is elaborated on in \cite{worm_bachelor}. 
 
 \subsubsection{Obtaining spectral functions using the existing code}
 
-In the current state of the code the Lehmann spectrum can be generated automatically and is output as a .dat file containing columns of values of $A(\omega)$ for each site.
+In the current state of the code, the Lehmann spectrum can be generated automatically and is output as a .dat file containing columns of values of $A(\omega)$ for each site.
 
 \bigskip
-The Green's function is also output as a .dat file with columns containing complex number values of $G(t,t'=t_0)$ for each site. In order to obtain the spectral function from this, one needs to perform the Fourier transform of this data manually, using (\ref{eq:non_equilibirum_spectral_function}), as there is currently no existing function in the codebase that handles this. In order to obtain more usable, less noisy results one should, prior to the Fourier transform, multiply $G$ with a dampening factor $e^{-\epsilon (t-t_0)}$, which effectively acts as a Lorentzian broadening in frequency space \cite{spectral_function}. To achieve a higher frequency/energy resolution one can additionally zero-pad the domain before performing the Fourier transform. 
+The Green's function is also output as a .dat file with columns containing complex number values of $G(t,t'=t_0)$ for each site. In order to obtain the spectral function from this, one needs to perform the Fourier transform of this data manually, using (\ref{eq:non_equilibirum_spectral_function}). There is currently no existing function in the codebase that handles this automatically. In order to obtain more usable, less noisy results one should, prior to the Fourier transform, multiply $G$ with a dampening factor $e^{-\epsilon (t-t_0)}$, which effectively acts as a Lorentzian broadening in frequency space \cite{spectral_function}. To achieve a higher frequency/energy resolution one can additionally zero-pad the domain before performing the Fourier transform. 

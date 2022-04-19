@@ -1,5 +1,5 @@
 \section{Coupling QD-Benzene}
-    The coupled QD-Benzene system is a combination of the above two systems with an extra hopping from all QD sites to a single Benzene site. Again the coulomb interactions are calculated via the Ohno interpolation and stored in the $U$ matrices. The distances used in the calculations for the $U$-matrix elements are shown in Fig. \ref{fig:coupled_distances}. The hopping amplitudes are the same as in the isolated systems with the addition of a parameter $v_c$, representing the hopping between the QD and the benzene ring. By setting $v_c = 0$ we would expect to see the same spectra as with the Isolated systems. It is important to note that as was alluded to in \ref{sec:electron_hole_symmetry} the on-site hopping term (chemical potential) $v_{ii}$ differs for Benzene and for QD sites and must thus be calculated separately. The hopping matrix is shown in Fig. \ref{fig:coupled_hoppings}
+    The coupled QD-Benzene system is a combination of the above two systems with an extra hopping from all QD sites to a single benzene site. Again the Coulomb interactions are calculated via the Ohno interpolation and stored in the $U$ matrices. The distances used in the calculations for the $U$-matrix elements are shown in Fig. \ref{fig:coupled_distances}. The hopping amplitudes are the same as in the isolated systems with the addition of a parameter $v_c$, representing the hopping between the QD and the benzene ring. By setting $v_c = 0$ we would expect to see the same spectra as for the isolated system. It is important to note that as was alluded to in \ref{sec:electron_hole_symmetry} the on-site hopping term (local potential) $v_{ii}$ differs for Benzene and for QD sites and must thus be calculated separately. The hopping matrix is shown in Fig. \ref{fig:coupled_hoppings}
     \medskip
     
     For now we only investigate how the system responds to the light pulse only interacting with the QD sites. Thus we set all the benzene hoppings and the hoppings between the QD and benzene to be non-time dependent.
@@ -10,7 +10,7 @@
 
 \usetikzlibrary{matrix, positioning}
 
-\colorlet{mgreen}{green!80!black!30}
+\colorlet{mgreen}{black!4}
 \colorlet{myellow}{yellow!90!red!70}
 \newcommand{\my}{|[fill=myellow]|}
 \renewcommand{\mg}{|[fill=mgreen]|}
@@ -32,16 +32,16 @@
     %maybe use brace to indicate Benzene and QD regions https://texample.net/tikz/examples/model-physics/
     \matrix (first) [space,nodes={cell,minimum width=2em, minimum height=2em}]
     {
-    \my         & 1             & 1         & $\sqrt{2}$& \mg -     & -         & -         & -         & -         & -        \\
-    1           & \my           & $\sqrt{2}$& 1         & \mg -     & -         & -         & -         & -         & -        \\
-    1           & $\sqrt{2}$    & \my       & 1         & \mg -     & -         & -         & -         & -         & -        \\
-    $\sqrt{2}$  & 1             & 1         & \my       & \mg -     & -         & -         & -         & -         & -        \\
+    \my         & 1             & 1         & $\sqrt{2}$& \mg -     & \mg -     & \mg -     & \mg -     & \mg -     & \mg -        \\
+    1           & \my           & $\sqrt{2}$& 1         & \mg -     & \mg -     & \mg -     & \mg -     & \mg -     & \mg -        \\
+    1           & $\sqrt{2}$    & \my       & 1         & \mg -     & \mg -     & \mg -     & \mg -     & \mg -     & \mg -        \\
+    $\sqrt{2}$  & 1             & 1         & \my       & \mg -     & \mg -     & \mg -     & \mg -     & \mg -     & \mg -        \\
     \mg -       & \mg -         & \mg -     & \mg -     & \my       & 1         & $\sqrt{3}$& 2         & $\sqrt{3}$& 1        \\
-    -           & -             & -         & -        & 1         &  \my      & 1         & $\sqrt{3}$& 2         & $\sqrt{3}$ \\
-    -           & -             & -         & -         & $\sqrt{3}$& 1         & \my       & 1         & $\sqrt{3}$& 2        \\
-    -           & -             & -         & -         & 2         & $\sqrt{3}$& 1         &  \my      & 1         & $\sqrt{3}$ \\
-    -           & -             & -         & -         & $\sqrt{3}$& 2         & $\sqrt{3}$& 1         & \my       & 1        \\
-    -           & -             & -         & -         & 1         & $\sqrt{3}$& 2         & $\sqrt{3}$& 1         &  \my \\ };
+    \mg -       & \mg -         & \mg -     & \mg -     & 1         &  \my      & 1         & $\sqrt{3}$& 2         & $\sqrt{3}$ \\
+    \mg -       & \mg -         & \mg -     & \mg -     & $\sqrt{3}$& 1         & \my       & 1         & $\sqrt{3}$& 2        \\
+    \mg -       & \mg -         & \mg -     & \mg -     & 2         & $\sqrt{3}$& 1         &  \my      & 1         & $\sqrt{3}$ \\
+    \mg -       & \mg -         & \mg -     & \mg -     & $\sqrt{3}$& 2         & $\sqrt{3}$& 1         & \my       & 1        \\
+    \mg -       & \mg -         & \mg -     & \mg -     & 1         & $\sqrt{3}$& 2         & $\sqrt{3}$& 1         &  \my \\ };
     
     \foreach \i/\x in {0/1, 1/2,2/3,3/4,4/5,5/6, 6/7, 7/8, 8/9, 9/10}{
     \node[headers, anchor=north] at ([yshift=4ex]first-1-\x.north) {\i};
@@ -94,7 +94,7 @@
     
     
     \end{tikzpicture}
-    \caption{Table showing the structure of the coulomb interaction matrices $U_{ij\sigma\sigma'}$. Each entry represents the distance between two sites as a multiple of the C-C bond length $d=\SI{1.40}{\angstrom}$. The $U_{ij}$ matrices can be constructed by applying the Ohno function \ref{eq:ohno_interpolation} to each entry in the table. Note that a dash implies an infinite distance (- $= \infty$).}
+    \caption{Structure of the coulomb interaction matrices $U_{ij\sigma\sigma'}$. Each entry represents the distance between two sites as a multiple of the C-C bond length $d=\SI{1.40}{\angstrom}$. The $U_{ij}$ matrices can be constructed by applying the Ohno function \ref{eq:ohno_interpolation} to each entry in the table. Note that a dash implies an infinite distance (- $= \infty$).}
     \label{fig:coupled_distances}
 \end{figure}
 
@@ -139,6 +139,6 @@
     \node[headers, anchor=west] at ([xshift=-4ex]first-\x-1.west) {\i};
     }
     \end{tikzpicture}
-    \caption{Table shows distances between sites, as multiples of the C-C bond length ($d=\SI{1.40}{\angstrom}$) {\color{red} idk maybe add functions on how to generate table... prbly not nescessary though}}
+    \caption{Hopping elements between sites, as multiples of the C-C bond length ($d=\SI{1.40}{\angstrom}$)}
     \label{fig:coupled_hoppings}
 \end{figure}

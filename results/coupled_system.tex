@@ -9,7 +9,7 @@ As can be seen when comparing Fig. \ref{fig:coupled_vc_0} with the spectra in Fi
 \begin{figure}[!hbt]
     \centering
     \includegraphics[width=0.49\textwidth]{graph/coupled_QD_vc_0.pdf}
-    \includegraphics[width=0.49\textwidth]{graph/coupled_benzene_vc_0.pdf}sh
+    \includegraphics[width=0.49\textwidth]{graph/coupled_benzene_vc_0.pdf}
     \caption{Spectral function of all the sites of the coupled system with the coupling parameter turned off, $v_c = 0$. These spectra should be identical to those in Fig. \ref{fig:spectrum_engineering} and Fig. \ref{fig:isolated_benzene}}
     \label{fig:coupled_vc_0}
 \end{figure}
@@ -25,10 +25,28 @@ No text yet, just some graphs showing what my results are roughly looking like. 
     \includegraphics[width=0.49\textwidth]{graph/spectrum_vc_sweep/QD_All_030.pdf}
     \includegraphics[width=0.49\textwidth]{graph/spectrum_vc_sweep/QD_All_070.pdf}
     \includegraphics[width=0.49\textwidth]{graph/spectrum_vc_sweep/QD_All_100.pdf}
-    \caption{Illustrations of how the spectral function of the QD changes with increasinlgy stronger coupling $v_c$ to the Benzene ring {\color{red} Can also make the same graphs for Benzene sites}}
-    \label{fig:spectrum_vc_sweep}
+    \caption{Changes in the spectral function of the QD with increasing coupling $v_c$ to the benzene ring}
+    \label{fig:spectrum_vc_sweep_QD}
 \end{figure}
 
+\begin{figure}[!hbt]
+    \centering
+    \includegraphics[width=0.49\textwidth]{graph/spectrum_vc_sweep/Benz_4_07_10.pdf}
+    \includegraphics[width=0.49\textwidth]{graph/spectrum_vc_sweep/Benz_59_07_10.pdf}
+    \includegraphics[width=0.49\textwidth]{graph/spectrum_vc_sweep/Benz_68_07_10.pdf}
+    \includegraphics[width=0.49\textwidth]{graph/spectrum_vc_sweep/Benz_7_07_10.pdf}
+    \caption{Changes in the spectral function of the benzene ring with increasing coupling $v_c$ to the QD}
+    \label{fig:spectrum_vc_sweep_benzene}
+\end{figure}
+
+\subsection{Interaction energy and impact ionisation}
+Ideally we would like to to investigate the changes in interaction energy on the QD and on the benzene ring separately, however, because all the calculations happen in the state basis, and the interaction energy depends on multiple sites, calculating the observable on a particular set of sites is non-trivial. In the state basis each basis vector is a state of the entire system and thus all sites are always involved, making it impossible to separate which sites the contributions come from without a change of basis. Performing a transformation into the site basis is outside the scope of this work, thus we will only be looking at the interaction energy of the system as a whole.
+\medskip
+
+Fig. \ref{fig:interaction_energy_omega} shows the interaction energy for a pulse energy $\omega = 2$, and $\omega=4$. Once without coupling of the QD to benzene ($v_c=0$) and once with strong coupling ($v_c=1.0$). The two graphs with $v_c=0$ are very similar to the total energy graphs seen in the QD system in Fig. \ref{fig:qd_9_total_energy}, just like before we see energy transfer at $\omega = 2$, but no permanent energy transfer from the light pulse to the system at $\omega = 4$, which is an indication that no electrons are being promoted into the highest energy level.
+\medskip
+
+Interestingly when $v_c = 1.0$ we see that for $\omega=4$ there is an energy transfer, and in addition a steady rise in Interaction energy, even after the pulse has fully decayed, which is usually an indicator for impact ionisation.
 
 \begin{figure}[!hbt]
     \centering
@@ -36,6 +54,68 @@ No text yet, just some graphs showing what my results are roughly looking like. 
     \includegraphics[width=0.49\textwidth]{graph/potential_energy/Epot_w4_vc0.pdf}
     \includegraphics[width=0.49\textwidth]{graph/potential_energy/Epot_w2_vc1.pdf}
     \includegraphics[width=0.49\textwidth]{graph/potential_energy/Epot_w4_vc1.pdf}
-    \caption{Potential Energy of coupled system after excitation with light pulse. Shown with and without coupling of QD to benzene. {\color{red} Graphs here are not final. Just to show what graphs I can produce. Parameters chosen should proably be adjusted. Bottom right is interesting though. Even though light only hits QD, allowing hoppings to benzene causes the potentail energy to remain high after the pulse vanishes. Not the case for QD only. Would be useful to see Potential energy for each site, but not possible with current implementation in the code}}
-    \label{fig:potential_energy}
+    \caption{Interaction energy of coupled system after excitation with light pulse. Shown with strong and without coupling between the QD and benzene.}
+    \label{fig:interaction_energy_omega}
 \end{figure}
+
+\subsection{Occupation number changes per site over time}
+Even though we can not study the interaction energy on each site individually, we can look at the occupation numbers $\hat{n}_i$ of each site and how they evolve over time. This will tell us if there is a net electron transfer form the QD to benzene and vice versa.
+
+\begin{figure}[!hbt]
+    \centering
+    \includegraphics[width=0.6\textwidth]{graph/occupation/occupation_w2_03_sum.pdf}
+    \caption{Caption}
+    \label{fig:}
+\end{figure}
+
+\begin{figure}[!hbt]
+    \centering
+    \includegraphics[width=0.49\textwidth]{graph/occupation/occupation_w2_Benz_sum_vcsweep.pdf}
+    \includegraphics[width=0.49\textwidth]{graph/occupation/occupation_w4_Benz_sum_vcsweep.pdf}
+    \caption{Caption}
+    \label{fig:}
+\end{figure}
+
+
+\begin{figure}[!hbt]
+    \centering
+    \includegraphics[width=0.35\textwidth]{graph/occupation/occupation_site_2_vc_00.pdf}
+    \includegraphics[width=0.35\textwidth]{graph/occupation/occupation_site_0_vc_00.pdf}
+    \includegraphics[width=0.35\textwidth]{graph/occupation/occupation_site_3_vc_00.pdf}
+    \includegraphics[width=0.35\textwidth]{graph/occupation/occupation_site_1_vc_00.pdf}
+    \caption{This is a couple of lines of caption to test out if this is enought space to write whatever I want to write later because I am not sure if this will be enoughh space }
+    \label{fig:my_label}
+\end{figure}
+
+\begin{figure}[!hbt]
+    \centering
+    \includegraphics[width=0.35\textwidth]{graph/occupation/occupation_site_2_vc_03.pdf}
+    \includegraphics[width=0.35\textwidth]{graph/occupation/occupation_site_0_vc_03.pdf}
+    \includegraphics[width=0.35\textwidth]{graph/occupation/occupation_site_3_vc_03.pdf}
+    \includegraphics[width=0.35\textwidth]{graph/occupation/occupation_site_1_vc_03.pdf}
+    \includegraphics[width=0.71\textwidth]{graph/occupation/occupation_site_4_vc_03.pdf}
+    \includegraphics[width=0.35\textwidth]{graph/occupation/occupation_site_9_vc_03.pdf}
+    \includegraphics[width=0.35\textwidth]{graph/occupation/occupation_site_5_vc_03.pdf}
+    \includegraphics[width=0.35\textwidth]{graph/occupation/occupation_site_8_vc_03.pdf}
+    \includegraphics[width=0.35\textwidth]{graph/occupation/occupation_site_6_vc_03.pdf}
+    \includegraphics[width=0.71\textwidth]{graph/occupation/occupation_site_7_vc_03.pdf}
+    \caption{This is a couple of lines of caption to test out if this is enought space to write whatever I want to write later because I am not sure if this will be enoughh space }
+    \label{fig:my_label}
+\end{figure}
+
+\begin{figure}[!hbt]
+    \centering
+    \includegraphics[width=0.35\textwidth]{graph/occupation/occupation_site_2_vc_10.pdf}
+    \includegraphics[width=0.35\textwidth]{graph/occupation/occupation_site_0_vc_10.pdf}
+    \includegraphics[width=0.35\textwidth]{graph/occupation/occupation_site_3_vc_10.pdf}
+    \includegraphics[width=0.35\textwidth]{graph/occupation/occupation_site_1_vc_10.pdf}
+    \includegraphics[width=0.71\textwidth]{graph/occupation/occupation_site_4_vc_10.pdf}
+    \includegraphics[width=0.35\textwidth]{graph/occupation/occupation_site_9_vc_10.pdf}
+    \includegraphics[width=0.35\textwidth]{graph/occupation/occupation_site_5_vc_10.pdf}
+    \includegraphics[width=0.35\textwidth]{graph/occupation/occupation_site_8_vc_10.pdf}
+    \includegraphics[width=0.35\textwidth]{graph/occupation/occupation_site_6_vc_10.pdf}
+    \includegraphics[width=0.71\textwidth]{graph/occupation/occupation_site_7_vc_10.pdf}
+    \caption{This is a couple of lines of caption to test out if this is enought space to write whatever I want to write later because I am not sure if this will be enoughh space }
+    \label{fig:my_label}
+\end{figure}
+

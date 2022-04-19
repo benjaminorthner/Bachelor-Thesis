@@ -1,10 +1,9 @@
 \section{Solar Cells}
 
-Solar cells are devices that convert radiation energy to electrical energy via the photovoltaic effect. This is most commonly achieved using the semiconductor silicone. In order to understand how they work, we must first understand the electron structure of silicone.
-
+Solar cells are devices that convert radiation energy into electrical energy via the photovoltaic effect. This is most commonly achieved using the doped semiconductor silicon. In order to understand how they work, we must first understand the electron structure of silicon.
 \medskip
 
-In a semiconductor when, $T=\SI{0}{\kelvin}$, all electrons occupy the so called valence band, which is separated from the unoccupied conductance band by an energy gap of $\sim \SI{1}{eV}$. One way for an electron to traverse this gap is by absorbing a photon with a energy higher than that of the band gap. This excitation of an electron into the conduction band leads to an increase in the electric current in the material. If the energy of the photon far exceeds that of the gap, the promoted electron bleeds off this excess energy in a process called thermalisation, in which phonons are excited leading to heating up of the material, and the excess energy effectively being lost. If the photon's energy is lower than that of the gap, it does not get absorbed at all. Because the Sun radiates light on a spectrum, all solar cells  of this type are subject to an inherent limit in efficiency, the Shockley-Queisser-limit, which under ideal conditions can reach a maximum of about $34\%$ \cite{shockley_queisser}.
+In a semiconductor, at $T=\SI{0}{\kelvin}$ all electrons occupy the so called valence band, which is separated from the unoccupied conductance band by an energy gap of $\sim \SI{1}{eV}$. One way for an electron to traverse this gap is by absorbing a photon with a energy higher than that of the band gap. This excitation of an electron into the conduction band leads to an increase in the electric current in the material. If the energy of the photon far exceeds that of the gap, the promoted electron bleeds off this excess energy in a process called thermalisation, in which phonons are excited and heat up the material. The excess energy is effectively lost. If the photon's energy is lower than that of the gap, it does not get absorbed at all. Because the sun radiates light on a spectrum, all solar cells  of this type are subject to an inherent limit in efficiency, the Shockley-Queisser-limit, which under ideal conditions can reach a maximum of about $34\%$ \cite{shockley_queisser}.
 
 \medskip
 
@@ -115,7 +114,7 @@ Various methods do exist that have the potential to overcome this limit. Among t
             \draw[brace] ($(E3.east) + (0.2,0)$) -- ($(H2.east) + (0.2,0)$) node[midway,right,xshift=.2cm] {$\Delta E_1$};
             \draw[brace] ($(E2.east) + (0.2,1.7)$) -- ($(E2.east) + (0.2,0)$) node[midway, right, xshift=.2cm] {$\Delta E_1$};
         \end{tikzpicture}
-        \caption{After excitation by a photon, the excess energy is used via impact ionisation to excite a second electron to the conduction band.}
+        \caption{After excitation by a photon, the excess energy is used  to excite a second electron to the conduction band via impact ionisation.}
         \label{fig:impact_ionisation}
     \end{minipage}
 \end{figure}

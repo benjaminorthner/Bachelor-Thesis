@@ -58,11 +58,11 @@ To encourage impact ionisation, we engineer the quantum dot to have 4 equally sp
         
     \end{tikzpicture}
     \captionsetup{singlelinecheck=off}
-    \caption{Illustration of why equally spaced energy levels encourage impact ionisation.
+    \caption{Illustration of why equally spaced energy levels encourage impact ionisation through Coulomb interactions.
     \newline
     1. An electron is promoted by two energy levels. 
     \newline
-    2. The promoted electron gives up half its energy to promote a second electron}
+    2. The promoted electron gives up half its energy to promote a second electron (squiggly line)}
     \label{fig:qd_spectrum_delta}
 \end{figure}
 
@@ -72,12 +72,12 @@ The main parameter that needs to be tuned to achieve such a spectrum is the on s
 \begin{figure}[!hbt]
     \centering
     \includegraphics[width=0.7\textwidth]{graph/spectrum_engineering.pdf}
-    \caption{temporary. Lehmann spectrum taken on site 0, but looks the same on all sites. if it matters black to white transition can be improved}
+    \caption{Equilibrium spectral function $A(\omega)$ on site 0.}
     \label{fig:spectrum_engineering}
 \end{figure}
 
-\subsection{Not seeing transition at expected energie, ie. why spectral function may be bad for small systems}
-In Fig. \ref{fig:qd_9_total_energy} we see the Total energy of the spectrum engineered QD over time, after being subjected to a light pulse of varying frequencies $\omega$. As expected, for low values of $\omega$ no electrons can be excited over the Mott gap and thus no energy from the light pulse is absorbed. At $\omega = 2.00$ we see an energy increase as the light is now energetic enough to promote an electron into the upper hubbard band.
+\subsection{Why the spectral function may not be a good choice for small systems}
+In Fig. \ref{fig:qd_9_total_energy} we see the total energy of the spectrum engineered QD over time, after being subjected to a light pulse of varying frequencies $\omega$. As expected, for low values of $\omega$ no electrons can be excited over the Mott gap and thus no energy from the light pulse is absorbed. At $\omega = 2.00$ (\color{red} units of t?\color{black}) we see an energy increase as the light is now energetic enough to promote an electron into the upper hubbard band.
 
 \medskip
 
@@ -85,10 +85,10 @@ Rather unexpectedly however, we see no energy gain at $\omega = 4.00$, meaning t
 
 \medskip
 
-One possible explanation for this may be that the spectral functions we are using are not truly representative of the transitions between the eigenstates of our system. As briefly explained in section \ref{sec:spectral_functions}, we compute spectral functions by adding an electron/hole to the system, letting it propagate for a fixed time, then removing it again, and evaluating the overlap of this system with an unmodified one. Thus the spectral function shows us transitions between systems with electron numbers differing by one. For large systems, with many electrons, adding or removing a single electron has an insignificant effect on its eigenenergy spectrum and thus it will be equal to the spectral function. However, for a small 2x2 site system like our QD, the effect may no longer be negligible. Meaning that the spectrum we see in Fig. \ref{fig:spectrum_engineering} may not accurately represent the true eigenenergies of the QD and the transition at $\omega\approx 4$ may not be possible.
+One possible explanation for this may be that the spectral functions we are using are not truly representative of the transitions between the eigenstates of our system. As briefly explained in section \ref{sec:spectral_functions}, we compute spectral functions by adding an electron/hole to the system, letting it propagate for a fixed time, then removing it again, and evaluating the overlap of this system with an unmodified one. Thus the spectral function shows us transitions between systems with electron numbers differing by one. For large systems, with many electrons, adding or removing a single electron has an insignificant effect on its eigenenergy spectrum and thus it will be equal to the spectral function. However, for a small 2x2 site system like our QD, the effect may no longer be negligible. Meaning that the one-particle spectrum we see in Fig. \ref{fig:spectrum_engineering} may not accurately represent the optical transitions possible in the QD.
 
 \medskip
-It may be possible to remedy this with the use of Loschmid spectra, which do not suffer from the same issues in small systems ({\color{red} I should probably cite something here about Loschmid spectra. What about this: \cite{loschmidt}?}). However the implementation of these will have to wait for a future project. 
+It may be possible to remedy this with the use of Loschmid spectra, which do not suffer from the same issues in small systems \cite{loschmidt}. However the implementation of these will have to wait for a future work. 
 
 \medskip
 
