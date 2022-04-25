@@ -13,7 +13,7 @@ We model the Benzene ring as a 6-site chain with periodic boundary conditions. T
 
 \medskip
 
-The energy of the nonlocal Coulomb interactions $U_{ij}$ are calculated using the Ohno interpolation (\ref{eq:ohno_interpolation}). The distances $|r_{ij}|$ are calculated using the C-C bond length in the benzene molecule, $d=\SI{1.40}{\angstrom}$, and its hexagonal geometry, shown in Fig. \ref{fig:benzene_distances}
+The energies of the non-local Coulomb interactions $U_{ij}$ are calculated using the Ohno interpolation (\ref{eq:ohno_interpolation}). The distances $|r_{ij}|$ are calculated using the C-C bond length in the benzene molecule, $d=\SI{1.40}{\angstrom}$, and its hexagonal geometry, shown in Fig. \ref{fig:benzene_distances}
 
 \begin{figure}[!hbt]
     \centering
@@ -42,7 +42,7 @@ The energy of the nonlocal Coulomb interactions $U_{ij}$ are calculated using th
 
 \subsection{Hopping amplitudes}
 One problem with modelling the benzene ring as a chain is that we lose the orientations of the bonds connecting neighbouring sites relative to the light pulse direction.
-This leads to an inaccuracy in the angle dependent time dependence of the hoppings between the sites, as illustrated in Fig. \ref{fig:benzene_angles}. However, by comparing the results with those of another group, where the orientation was taken into account, we saw only negligible differences in the results and thus choose to move forward with this model.
+This leads to an inaccuracy in the angle-dependent time dependence of the hoppings between the sites, as illustrated in Fig. \ref{fig:benzene_angles}. However, by comparing the results with those of another group, where the orientation was taken into account, we saw only negligible differences in the results and thus choose to move forward with this model.
 %\medskip
 %lexicographical indexing no longer produces proper hopping signs... but as mentioned we ignore that for now
     %%%%%%%%%%%%%%%%%
@@ -54,7 +54,8 @@ This leads to an inaccuracy in the angle dependent time dependence of the hoppin
     \begin{tikzpicture}[decoration=snake,
                     Benzene/.style={draw,thick, circle, radius = .1em, fill=red!80!yellow},
                     squiggly/.style={->, decorate, thick, yellow!70!red},
-                    doublearrow/.style={->, double, line width=1pt, -Implies, double distance=3pt, shorten >= 2cm, shorten <=2cm}
+                    doublearrow/.style={->, double, line width=1pt, -Implies, double distance=3pt, shorten >= 2cm, shorten <=2cm},
+                    scale=0.9
                     ]
                     
     
@@ -109,3 +110,4 @@ This leads to an inaccuracy in the angle dependent time dependence of the hoppin
     \caption{Discrepancy in light pulse orientations relative to sites when modelling benzene as a 1D chain with periodic boundary conditions}
     \label{fig:benzene_angles}
 \end{figure}
+\newpage

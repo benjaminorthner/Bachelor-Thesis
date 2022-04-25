@@ -1,5 +1,5 @@
 \section{Coupling QD-Benzene}
-    The coupled QD-Benzene system is a combination of the above two systems with an extra hopping from all QD sites to a single benzene site. Again the Coulomb interactions are calculated via the Ohno interpolation and stored in the $U$ matrices. The distances used in the calculations for the $U$-matrix elements are shown in Fig. \ref{fig:coupled_distances}. The hopping amplitudes are the same as in the isolated systems with the addition of a parameter $v_c$, representing the hopping between the QD and the benzene ring. By setting $v_c = 0$ we would expect to see the same spectra as for the isolated system. It is important to note that as was alluded to in \ref{sec:electron_hole_symmetry} the on-site hopping term (local potential) $v_{ii}$ differs for Benzene and for QD sites and must thus be calculated separately. The hopping matrix is shown in Fig. \ref{fig:coupled_hoppings}
+    The coupled QD-Benzene system combines the above two systems with an extra hopping from all QD sites to a single benzene site. Again the Coulomb interactions are calculated via the Ohno interpolation and stored in the $U$ matrices. The distances used in the calculations for the $U$-matrix elements are shown in Fig. \ref{fig:coupled_distances}. The hopping amplitudes are the same as in the isolated systems with the addition of a parameter $v_c$, representing the hopping between the QD and the benzene ring. By setting $v_c = 0$ we would expect to see the same spectra as for the isolated system. As was alluded to in \ref{sec:electron_hole_symmetry} the on-site hopping term (local potential) $v_{ii}$ differs for Benzene and QD sites and must thus be calculated separately. The hopping matrix is shown in Fig. \ref{fig:coupled_hoppings}
     \medskip
     
     For now we only investigate how the system responds to the light pulse only interacting with the QD sites. Thus we set all the benzene hoppings and the hoppings between the QD and benzene to be non-time dependent.
@@ -11,8 +11,6 @@
 \newcommand{\my}{|[fill=myellow]|}
 \renewcommand{\mg}{|[fill=mgreen]|}
 
-
-
 \begin{figure}[!hbt]
     \centering
     \begin{tikzpicture}[cell/.style={rectangle,draw=black},
@@ -22,7 +20,8 @@
                     QD/.style={draw,thick,circle, radius = .1em, fill=black!40, inner sep=0},
                     Benzene/.style={draw,thick, circle, radius = .1em, fill=red!80!yellow, inner sep=0},
                     nlabelcolor/.style={gray},
-                    QDlabel/.style={label={above left:{\color{gray}#1}}}
+                    QDlabel/.style={label={above left:{\color{gray}#1}}},
+                    scale= 0.80, every node/.style={scale=0.80}
                     ]
     
     %maybe use brace to indicate Benzene and QD regions https://texample.net/tikz/examples/model-physics/
@@ -114,7 +113,8 @@
                     QD/.style={draw,thick,circle, radius = .1em, fill=green!80!yellow, inner sep=0},
                     Benzene/.style={draw,thick, circle, radius = .1em, fill=red!80!yellow, inner sep=0},
                     nlabelcolor/.style={gray},
-                    QDlabel/.style={label={above left:{\color{gray}#1}}}
+                    QDlabel/.style={label={above left:{\color{gray}#1}}},
+                    scale=0.75, every node/.style={scale=0.75}
                     ]
 
     \matrix (first) [space,nodes={cell,minimum width=2.3em, minimum height=2.3em}]

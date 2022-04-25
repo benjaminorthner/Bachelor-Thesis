@@ -1,31 +1,31 @@
 \section{Non-local Coulomb Interactions} \label{sec:non_local_coulomb}
 
-One of the goals of this thesis is to expand the capabilities of the existing code to include non-local Coulomb interactions. This will allow for a more true to life representations of electron systems. In the case of a benzene ring for example, non-local interactions play a vital role and are absolutely necessary if one hopes to reproduce experimental results. 
+One of the goals of this thesis is to expand the capabilities of the existing code to include non-local Coulomb interactions. This will allow for a more true to life representation of electron systems. In the case of a benzene ring, non-local interactions play a vital role and are necessary if one hopes to reproduce experimental results. 
 
 \bigskip
 
-In the existing implementation the on-site repulsive coulomb force is accounted for in the Hamiltonian as
+In the existing implementation, the on-site repulsive Coulomb force is accounted for in the Hamiltonian as
 \begin{equation}
     \hat{H}=\underbrace{{\color{red!70!black} U} \sum_{i} \hat{n}_{i \uparrow} \hat{n}_{i \downarrow} + \sum_{i\sigma} v_{ii} \hat{c}_{i \sigma}^{\dagger} \hat{c}_{i \sigma}}_{\text{Interaction Energy}}+%
     \underbrace{\sum_{{i\neq j,\, \sigma}} v_{j i} \hat{c}_{i \sigma}^{\dagger} \hat{c}_{j \sigma}}_{\text{Kinetic Energy}}\label{eq:local_ham_nonsym}.
 \end{equation}
 
- The extension to nonlocal coulomb interactions follows naturally as
+ The extension to nonlocal Coulomb interactions follows naturally as
  \begin{equation}
     \hat{H}= \sum_{ij\sigma\sigma'}{\color{red!70!black} U_{ij\sigma\sigma'}}\hat{n}_{i \sigma} \hat{n}_{j\sigma'}+\sum_{i\sigma} v_{ii} \hat{c}_{i \sigma}^{\dagger} \hat{c}_{i \sigma} + %
     \sum_{i\neq j,\,\sigma} v_{j i} \hat{c}_{i \sigma}^{\dagger} \hat{c}_{j \sigma}%
     \label{eq:ham_nonsym}.
 \end{equation}
-Because only the mutual orientation of the spins $\sigma$ and $\sigma'$ can have physical effects, we can split $U_{ij\sigma\sigma'}$ into two $N_s\times N_s$ matrices $U_{ij}^{\text{same-spin}}$ and $U_{ij}^{\text{opp-spin}}$. These must be generated for each system geometry and then be passed as parameters to the Hamiltonian assembly routine. For all results shown in this thesis, $U^{\text{same-spin}}$ and $U^{\text{opp-spin}}$ have been chosen to be identical in their off-diagonal elements. Due to the Pauli exclusion principle the diagonal elements of $U^{\text{same-spin}}$ must be set to $0$, as two electrons with equal spins can not occupy the same site. An example of these matrices can be seen in Fig. \ref{fig:coupled_distances}
+Because only the mutual orientation of the spins $\sigma$ and $\sigma'$ can have physical effects, we can split $U_{ij\sigma\sigma'}$ into two $N_s\times N_s$ matrices $U_{ij}^{\text{same-spin}}$ and $U_{ij}^{\text{opp-spin}}$. These must be generated for each system geometry and then be passed as parameters to the Hamiltonian assembly routine. For all results shown in this thesis, $U^{\text{same-spin}}$ and $U^{\text{opp-spin}}$ have been chosen to be identical in their off-diagonal elements. Due to the Pauli exclusion principle, the diagonal elements of $U^{\text{same-spin}}$ must be set to $0$, as two electrons with equal spins can not occupy the same site. An example of these matrices can be seen in Fig. \ref{fig:coupled_distances}
 
 
 \subsection{Electron-Hole Symmetry and Chemical Potential} \label{sec:electron_hole_symmetry}
 \subsubsection{Local U}
-In the form (\ref{eq:local_ham_sym}), the Hamiltonian changes differently upon addition of an electron compared to an addition of a hole. However, it will later prove to be rather useful to have the Hamiltonian be electron-hole symmetric, and ideally take the following form
+In the form (\ref{eq:local_ham_sym}), the Hamiltonian changes differently upon the addition of an electron compared to the addition of a hole. However, it will later prove to be rather useful to have the Hamiltonian be electron-hole symmetric and ideally take the following form
 \begin{equation}
     \hat{H} = U \sum_i \left(\hat{n}_{i\uparrow}-\frac{1}{2}\right)\left(\hat{n}_{i\downarrow}-\frac{1}{2}\right)+\sum_{i\neq j,\,\sigma} v_{j i} \hat{c}_{i \sigma}^{\dagger} \hat{c}_{j \sigma}\label{eq:local_ham_sym}.
 \end{equation}
-Unfortunately the numerical implementation of (\ref{eq:local_ham_nonsym}) is less practical. However, we can alternatively achieve electron-hole symmetry while still using (\ref{eq:local_ham_nonsym}) by setting the value of the local potential to $v_{ii} = -U / 2$.
+Unfortunately, the numerical implementation of (\ref{eq:local_ham_nonsym}) is less practical. However, we can alternatively achieve electron-hole symmetry while still using (\ref{eq:local_ham_nonsym}) by setting the value of the local potential to $v_{ii} = -U / 2$.
 \medskip
 
 \subsubsection{Non-Local U}
@@ -38,46 +38,44 @@ One can think of this sum as a sum over all the U-matrix elements in the row cor
 
 \subsubsection{Pariser-Parr-Pople Model}\label{subsec:ppp}
 
-The Pariser-Parr-Pople model (PPP) aims to simplify the Hamiltonian of single band $\pi$-electron system, such as the one of the molecule benzene, to a single $p_z$ orbital form. It's Hamiltonian in electron-hole symmetric form is
+The Pariser-Parr-Pople model (PPP) aims to simplify the Hamiltonian of single-band $\pi$-electron systems, such as the one of the molecule benzene, to a single $p_z$ orbital form. Its Hamiltonian in electron-hole symmetric form is
 
 \begin{equation}
     \mathcal{H}_{PPP} = \underbrace{-t \sum_{\langle ij \rangle \sigma} \left(\hat{c}^\dagger_{i\sigma}\hat{c}_{j\sigma} + h.c.\right) 
     }_{\text{hopping terms}}
     + \underbrace{U \sum_i \left(\hat{n}_{i\uparrow} - \frac{1}{2}\right)\left(\hat{n}_{i\downarrow} - \frac{1}{2}\right)
-    }_{\text{local coulomb interaction}}
+    }_{\text{local Coulomb interaction}}
     + \underbrace{\frac{1}{2}\sum_{i\neq j} U_{ij} \bigg(\hat{n}_{i} - 1\bigg)\bigg(\hat{n}_{i} - 1\bigg)
     }_{\text{non-Local Coulomb interactions}}
 \end{equation}
 Here $\langle \cdot\cdot\cdot \rangle$ indicates nearest neighbour hoppings and $\hat{n}_i = \hat{n}_{i\uparrow} + \hat{n}_{i\downarrow}$
 \\
 
-{\color{red} Q: We do not use this form in the code... instead we simply add $U$ and $U_{ij}$ wherever there is an interaction present... and on top of that we have an on-site hopping term a Hartree term... How would I write about this? Also Paul had a derivation of this Hartree term using some Feynmann diagram stuff... Should I write about that?}
-\\
 
-We model the energy of the non-local coulomb interaction using the Ohno parametrisation of the coulomb interaction  \cite{ppp_ohno, hoerbinger}
+In the PPP model, the energy of the non-local Coulomb interaction is calculated using the Ohno parametrisation of the Coulomb interaction  \cite{ppp_ohno, hoerbinger}
 \begin{equation}
     U_{ij} = \frac{U}{\sqrt{1 + \alpha |r_{ij}|^2}} \quad \text{where} \quad \alpha = \left(\frac{4\pi\varepsilon_0 U}{e^2} \right)^2 \label{eq:ohno_interpolation}
 \end{equation}
-and $|r_{ij}|$ is the distance between two sites. This ensures that at long ranges, $r_{ij}\to\infty$, $U_{ij}$ gives the standard Coulomb interaction energy, and at short ranges, $r_{ij}\to 0$, we get the on-site coulomb interaction $U_{ij} = U_{ii} =: U$ 
+and $|r_{ij}|$ is the distance between two sites. This ensures that at long ranges, $r_{ij}\to\infty$, $U_{ij}$ gives the standard Coulomb interaction energy, and at short ranges, $r_{ij}\to 0$, we get the on-site Coulomb interaction $U_{ij} = U_{ii} =: U$ 
 
-\subsection{Interaction Energy as a Measure for Impact Ionisation}
-In the preceding works \cite{innerberger,worm_bachelor,worm_project,prauhart}, impact ionisation was studied by looking at how the expectation value of the ``site averaged double occupation'' changed over time, after the initial excitation by the light pulse.
+\subsection{Interaction Energy as a Measure for Impact Ionisation}\label{sec:interaction_energy}
+In the preceding works \cite{innerberger,worm_bachelor,worm_project,prauhart}, impact ionisation was studied by looking at how the expectation value of the ``site averaged double occupation'' changed over time after the initial excitation by the light pulse.
 \begin{equation}
     \left\langle{\hat{d}(t)}\right\rangle = \frac{1}{N_s}\sum_i \braket{\hat{n}_{i\uparrow}(t)\hat{n}_{i\downarrow}(t)}
 \end{equation}
 
-However the use of this observable was only valid because it happened to be proportional to the interaction energy term in the system's Hamiltonian (\ref{eq:local_ham_nonsym}). The true measure for impact ionisation is in fact the rate of conversion of the system's kinetic energy to it's interaction energy, for a constant total energy.
+However, the use of this observable was only valid because it happened to be proportional to the interaction energy term in the system's Hamiltonian (\ref{eq:local_ham_nonsym}). The true measure for impact ionisation is the conversion rate of the system's kinetic energy to its interaction energy for constant total energy.
 
 \medskip
-In a sense this is the very definition of impact ionisation. In ordinary systems any excess kinetic energy is lost to phonon excitations. Converting this kinetic energy into interaction energy, for example by promoting another electron to a higher energy level, is what we call impact ionisation.
+In a sense, this is the very definition of impact ionisation. In ordinary systems, any excess kinetic energy is lost to phonon excitations. Converting this kinetic energy into interaction energy, for example by promoting another electron to a higher energy level, is what we call impact ionisation.
 \medskip
 
-For a Hamiltonian with non-local Coulomb interactions (\ref{eq:ham_nonsym}) the proportionality between double occupation and interaction energy is lost. Thus a new function was implemented that calculates the site-averaged expectation value of the interaction energy at every time-step.
+For a Hamiltonian with non-local Coulomb interactions (\ref{eq:ham_nonsym}), the proportionality between double occupation and interaction energy is lost. Thus a new function was implemented that calculates the site-averaged expectation value of the interaction energy at every time step.
 \begin{equation}
     \left\langle{\hat{E}_{\text{int}}(t)}\right\rangle = \frac{1}{N_s} \sum_{ij\sigma\sigma'} \Big\langle{U_{ij\sigma\sigma'}\hat{n}_{i \sigma}(t) \hat{n}_{j\sigma'}(t)}\Big\rangle + \sum_{i\sigma} \left\langle v_{ii} \hat{c}_{i \sigma}^{\dagger} \hat{c}_{i \sigma}\right\rangle
     \label{eq:expectation_epot}
 \end{equation}
-In the state basis, where each basis vector represents a possible electron configuration, all interaction energy contributions (\ref{eq:expectation_epot}) lie on the diagonal of the Hamiltonian, because there are no electron hoppings involved. Thus in order to implement the calculation of (\ref{eq:expectation_epot}) in the code we first extract the diagonal elements of the Hamiltonian $\vec{H}_{diag}$ from its sparse representation, then, at every time step, compute the observable
+In the state basis, where each basis vector represents a possible electron configuration, all interaction energy contributions (\ref{eq:expectation_epot}) lie on the diagonal of the Hamiltonian because there are no electron hoppings involved. Thus in order to implement the calculation of (\ref{eq:expectation_epot}) in the code, we first extract the diagonal elements of the Hamiltonian $\vec{H}_{diag}$ from its sparse representation, then, at every time step, compute the observable
 \begin{equation}
      \left\langle{\hat{E}_{\text{int}}(t)}\right\rangle = \vec{v}^\dagger(t) \left(\vec{H}_{diag} \odot \vec{v}(t)\right) 
      \label{eq:expecation_epot_code}

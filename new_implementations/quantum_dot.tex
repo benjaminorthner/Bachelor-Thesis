@@ -15,7 +15,7 @@ Their high efficiency in energy conversion has been shown experimentally, and im
  
  \medskip
  
- In order to be consistent with the model used for the Benzene ring, the nonlocal Coulomb interactions for the QD are also calculated using the PPP model as described in section \ref{subsec:ppp}. The distances used in the Ohno function, shown in Fig.
+ In order to be consistent with the model used for the Benzene ring, the non-local Coulomb interactions for the QD are also calculated using the PPP model as described in section \ref{subsec:ppp}. The distances used in the Ohno function, shown in Fig.
  \ref{fig:qd_distances}, were calculated by choosing the lattice constant to be equal to the $C-C$ bond length $d =\SI{1.4}{\angstrom}$. This does not necessarily have a physical basis, but for now it provides sufficient flexibility to engineer the desired spectrum by varying the on-site Coulomb interaction $U$, which is shown in section \ref{subsec:spectrum_engineering}.
  
 \begin{figure}[!hbt]
@@ -46,7 +46,7 @@ Their high efficiency in energy conversion has been shown experimentally, and im
     
     \end{tikzpicture}
     
-    \caption{Distances used in Ohno function (\ref{eq:ohno_interpolation}) to calculate the coulomb potential $U_{ij}$. With $d = \SI{1.4}{\angstrom}$\newline}
+    \caption{Distances used in Ohno function (\ref{eq:ohno_interpolation}) to calculate the Coulomb potential $U_{ij}$. With $d = \SI{1.4}{\angstrom}$\newline}
     \label{fig:qd_distances}
     \end{minipage}
     \hfill
@@ -90,11 +90,11 @@ Their high efficiency in energy conversion has been shown experimentally, and im
 \end{figure}
 
  \subsection{Light pulse direction and hopping time dependence}
-For every geometry, it is necessary to define a function that explicitly determines whether or not the hopping amplitude $v_{ij}$ between two any two sites $i$ and $j$ is time dependent, i.e. is modified by the light pulse.
+For every geometry, it is necessary to define a function that explicitly determines whether or not the hopping amplitude $v_{ij}$ between any two sites $i$ and $j$ is time-dependent, i.e. is modified by the light pulse.
 \medskip
 
-This depends on the direction of the light pulse, which for our implementation is always along the diagonal coming from the top left. Any hoppings perpendicular to the pulse direction will remain constant over time and are thus not time dependent.
+This depends on the direction of the light pulse, which is always along the diagonal coming from the top left for our implementation. Any hoppings perpendicular to the pulse direction will remain constant over time and are thus not time-dependent.
 \medskip
 
-The sign of the imaginary parts of the hopping amplitudes is positive for hoppings parallel to the pulse direction and negative for hoppings perpendicular to the pulse direction. By labelling the sites in lexicographical order as shown in Fig. \ref{fig:qd_hoppings} we ensure that all hoppings from sites $i\to j$ have the same sign as $(j-i)$. The positive direction of the imaginary part of the hopping amplitudes are indicated in Fig. \ref{fig:qd_hoppings} by arrowheads. The diagonal hopping between sites 1 and 2 has no direction shown because in our case it is perpendicular to the light pulse and will have no effect anyway.
+The sign of the imaginary parts of the hopping amplitudes is positive for hoppings parallel to the pulse direction and negative for hoppings perpendicular to the pulse direction. By labelling the sites in lexicographical order, as shown in Fig. \ref{fig:qd_hoppings}, we ensure that all hoppings from sites $i\to j$ have the same sign as $(j-i)$. The positive directions of the imaginary parts of the hopping amplitudes are indicated in Fig. \ref{fig:qd_hoppings} by arrowheads. The diagonal hopping between sites 1 and 2 has no direction shown because, in our case, it is perpendicular to the light pulse and will have no effect regardless.
 
